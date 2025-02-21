@@ -9,6 +9,13 @@ var itemId = 0;
 myHeading.textContent = `${day()}, ${month()} ${new Date().getDate()}`;
 // Example: Monday, December 30
 
+// Apply custom style to all external links;
+document.querySelectorAll('a[href^="http"]').forEach(link => {
+    if (!link.href.includes(location.hostname)) {
+        link.classList.add('external-link');
+    }
+});
+
 // Add event listeners for the Add button and when 'Enter' is pressed:
 addTaskButton.addEventListener('click', addListItem);
 taskInput.addEventListener('keydown', (event) =>{
@@ -141,3 +148,4 @@ function month(){
     const month = months[new Date().getMonth()];
     return month
 }
+

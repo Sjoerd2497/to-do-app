@@ -1,0 +1,77 @@
+html{
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    background-color: #fbfbfb;
+}
+body{
+    width: 700px;
+    margin: 0 auto;
+    padding: 20px 20px 20px 20px;
+    border: 0px dotted black;
+}
+button{
+    font-size: 16px;
+    height: 36px;
+    width: 80px;
+    align-self: center;
+}
+p, li{
+    color: black;
+    font-size: 18px;
+    width: 500px;
+    margin: 10px 0px 5px 0px;
+}
+
+li{
+    gap: 0px;
+    margin: 20px 0px 20px;
+}
+
+#checkboxes ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+h1{
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px 0;
+}
+
+img{
+    display: block;
+    margin: 0 auto;
+}
+input{
+    line-height: 2em;
+    padding: 0px 0 0 10px;
+    font-size: 16px;
+}
+
+.checkbox{
+    margin-right: 20px;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.editinput{
+    margin: 0 26px 0;
+    line-height: 1.5em;
+}
+
+.editlink{
+    align-self: center;
+    color: black;
+    font-size: 12px;
+    margin: 0px 0 0px 10px;
+    text-decoration: underline;
+}
+
+.item{
+    display: inline-block;
+}

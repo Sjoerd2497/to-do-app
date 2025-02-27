@@ -41,8 +41,8 @@ a:hover{
 } 
 
 body{
-    width: 700px;
-    margin: 0 auto;
+    width: auto;
+    margin: 0rem 2rem 0 2rem;
     padding: 20px 20px 20px 20px;
     border: 0px dotted black;
 }
@@ -87,14 +87,19 @@ input{
     font-size: 16px;
 }
 
+input[type="text"]{
+    flex: auto;
+}
+
 .checkbox{
     margin-right: 20px;
 }
 
 .container{
-    width: 100%;
+    width: 80vw;
+    max-width: 800px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .editinput{

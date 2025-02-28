@@ -23,7 +23,7 @@ a:hover{
 }
 
 ::selection{
-    background-color: #FDF991;
+    background-color: #fffb7d;
 }
 
 .external-link::after {
@@ -63,6 +63,8 @@ li{
 
 h1{
     font-family: Helvetica, Arial, sans-serif;
+    font-size: 50px;
+    font-weight: 500;
     margin: 0;
 }
 
@@ -84,8 +86,8 @@ input[type="text"]{
     flex: auto;
 }
 
-header{
-    padding: 0 0 2rem 0;
+nav{
+    padding: 1.5rem 0 0 0;
 }
 
 .checkbox{
@@ -100,7 +102,7 @@ header{
 
 @media (min-width: 480px){
     .input-container{
-        width: 70%;
+        width: auto;
     }
 }
 
@@ -111,9 +113,18 @@ header{
     align-items: baseline;
 }
 
+@media (min-width: 768px){
+    .header-container{
+        border: 0.5px;
+        border-color: #d8d8d8;
+        border-style: none none solid none;
+    }
+}
+
 @media (min-width: 480px) { 
     .header-container{
         flex-direction: row;
+        padding: 0 0 1.5rem 0;
     }
 }
 
@@ -134,6 +145,10 @@ header{
     margin: 0.5rem 0 0.5rem 0;
 }
 
+.nav-item:hover{
+    background-color: rgb(210, 210, 210);
+}
+
 .root{
     display: flex;
     min-height: 100vh;
@@ -144,7 +159,10 @@ header{
     left: -100%;
     bottom: 0;
     top: 0;
-    background-color: #f3f3f3;
+    background-color: #f6f8fa;
+    border: 0.5px;
+    border-color: #d8d8d8;
+    border-style: none solid none none;
     padding: 1.5rem 1rem 0 1rem;
     min-width: 280px;
     flex-shrink: 0;
@@ -164,7 +182,30 @@ header{
     }
 }
 
-
 .main-content{
-    padding: 1.5rem 2rem 0 2rem;
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    flex-grow: 1;
+}
+
+.main-content > *{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 40rem;
+}
+
+@media (min-width: 768px){
+    .main-content > *{
+        max-width: 40rem;
+    }
+}
+
+@media (min-width: 1580px){
+    .main-content > *{
+        max-width: 48rem;
+    }
+}
+
+
+.main-content > *:nth-child(2){
+    margin-top: 2rem;
 }

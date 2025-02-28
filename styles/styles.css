@@ -11,7 +11,7 @@ a{
 }
 
 a:link{
-    color: rgb(79, 79, 79);
+    color: #4f4f4f;
 }
 
 a:visited{
@@ -23,7 +23,7 @@ a:hover{
 }
 
 ::selection{
-    background-color: #fffb7d;
+    background-color: #fff34d;
 }
 
 .external-link::after {
@@ -45,14 +45,7 @@ button{
     height: 36px;
     width: 80px;
     align-self: center;
-}
-
-li{
-    color: black;
-    font-size: 18px;
-    gap: 0px;
-    margin: 20px 0px 20px;
-    height: 24px;
+    margin-left: 1rem;
 }
 
 #checkboxes ul{
@@ -62,13 +55,14 @@ li{
 }
 
 h1{
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: Inter, sans-serif;
     font-size: 50px;
     font-weight: 500;
     margin: 0;
 }
 
 h2{
+    font-family: Inter, sans-serif;
     margin: 0;
 }
 
@@ -78,12 +72,28 @@ img{
 }
 input{
     line-height: 2em;
-    padding: 0px 0 0 10px;
     font-size: 16px;
 }
 
 input[type="text"]{
+    margin: 1rem 0 1em 0;
+    padding: 8px 1rem 8px 1rem;
     flex: auto;
+    border-radius: 10px;
+    border: 1px solid #d8d8d8;
+    box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1),
+    0px 4px 12px 4px rgba(60, 64, 67, 0.05);
+}
+
+input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+}
+
+input[type="text"]:hover{
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
 }
 
 nav{
@@ -98,6 +108,21 @@ nav{
     width: 100%;
     display: flex;
     justify-content: flex-start;
+}
+
+.list-item{
+    display: flex;
+    align-items: baseline;
+    color: black;
+    font-size: 18px;
+    gap: 0px;
+    text-overflow: wrap;    
+    margin: 20px 0px 20px 0;
+}
+
+.button-container{
+    display: flex;
+    justify-content: flex-end;
 }
 
 @media (min-width: 480px){
@@ -115,7 +140,7 @@ nav{
 
 @media (min-width: 768px){
     .header-container{
-        border: 0.5px;
+        border: 1px;
         border-color: #d8d8d8;
         border-style: none none solid none;
     }
@@ -129,12 +154,16 @@ nav{
 }
 
 .editinput{
-    margin: 0 26px 0;
     line-height: 1.5em;
+    font-size: 18px;
+    margin: 0 !important;
+    padding: 4px 0 4px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #d8d8d8;
+    box-shadow: unset !important;
 }
 
 .editlink{
-    align-self: center;
     color: black;
     font-size: 12px;
     margin: 0px 0 0px 10px;
@@ -142,11 +171,28 @@ nav{
 }
 
 .nav-item{
+    color: #4f4f4f;
+    font-size: 16px;
+    font-family: 'Segoe UI', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin: 0.5rem 0 0.5rem 0;
+    padding: 8px 10px 8px 10px;
+    border-radius: 0.5rem;
 }
 
 .nav-item:hover{
     background-color: rgb(210, 210, 210);
+    
+}
+
+.nav-link{
+    padding: 10px 0 10px 0;
+}
+
+.nav-title{
+    padding: 0 0 0 10px;
 }
 
 .root{
@@ -163,8 +209,8 @@ nav{
     border: 0.5px;
     border-color: #d8d8d8;
     border-style: none solid none none;
-    padding: 1.5rem 1rem 0 1rem;
-    min-width: 280px;
+    padding: 3rem 1.5rem 0 1.5rem;
+    width: 280px;
     flex-shrink: 0;
     transition: left 400ms;
 }
@@ -183,7 +229,7 @@ nav{
 }
 
 .main-content{
-    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    padding: 3rem 1.5rem 1.5rem 1.5rem;
     flex-grow: 1;
 }
 
@@ -201,7 +247,7 @@ nav{
 
 @media (min-width: 1580px){
     .main-content > *{
-        max-width: 48rem;
+        max-width: 44rem;
     }
 }
 

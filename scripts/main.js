@@ -7,12 +7,14 @@ var itemId = 0;
 
 // Update heading with current date:
 myHeading.textContent = `${day()}, ${new Date().getDate()} ${month()}`;
-// Example: Monday, December 30
+// Example: Mon, 30 Dec
 
 // Apply custom style to all external links;
 document.querySelectorAll('a[href^="http"]').forEach(link => {
     if (!link.href.includes(location.hostname)) {
         link.classList.add('external-link');
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
     }
 });
 
@@ -32,6 +34,7 @@ function addListItem(){
     if (taskText) {
         const listItem = document.createElement('li');
         listItem.setAttribute("id", "list" + itemId);
+        listItem.setAttribute("class", "list-item")
         const checkBox = createCheckBox(itemId);
         const editLink = createEditLink(itemId);
         
@@ -94,10 +97,15 @@ function clickCheckBox(id){
 
 function editListItem(id){
     const listItem = document.getElementById("list" + extractNumberFromString(id));
-    const checkBox = document.getElementById("checkbox" + extractNumberFromString(id)).remove();
+    const checkBox = document.getElementById("checkbox" + extractNumberFromString(id));
+    checkBox.disabled = true;
     const editLink = document.getElementById(id).remove();
     const listItemText = listItem.textContent;
-    listItem.textContent = "";
+    listItem.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            node.textContent = ""; // Modify the text only
+        }
+    });
 
     // Create new input field
     const editInput = document.createElement('input');
@@ -105,13 +113,13 @@ function editListItem(id){
     editInput.setAttribute("class", "editinput")
     editInput.setAttribute("id", "editinput" + extractNumberFromString(id));
     editInput.value = listItemText;
-    listItem.insertAdjacentElement('afterbegin', editInput);
+    listItem.insertAdjacentElement('beforeend', editInput);
     editInput.focus(); // Puts cursor in text input field
     editInput.addEventListener("keydown", (event) => {
         // If the user presses the "Enter" key:
         if (event.key === "Enter"){
             listItem.textContent = editInput.value.trim();
-            const checkBox = createCheckBox(extractNumberFromString(id));
+            checkBox.disabled = false;
             const editLink = createEditLink(extractNumberFromString(id));
             listItem.insertAdjacentElement('afterbegin', checkBox);
             listItem.insertAdjacentElement('beforeend', editLink);

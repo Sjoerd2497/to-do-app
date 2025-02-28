@@ -14,8 +14,9 @@
           <h2 class="nav-title">My lists</h2>
         </header>
         <nav>
-          <div class="nav-item"><a href>My to-do list</a></div>
-          <div class="nav-item">Groceries</div>
+          <a class="nav-link" href><div class="nav-item">My to-do list</div></a>
+          <a class="nav-link" href><div class="nav-item">Groceries</div></a>
+          <a class="nav-link" href><div class="nav-item">This list has an enormously long name</div></a>
         </nav>
       </div>
       <div class="main-content">
@@ -24,11 +25,13 @@
           <h2 id="dateText">Date</h2>
         </header>
         <p>This is a description of my to-do list. It can contain info about the list and also may contain links. Link to my <a href="https://www.sjoerddejonge.nl">personal website</a>. <a href="https://www.google.com">Link to google.com</a> </p>
-        <p>Add item to the list:</p>
+        <p>Add an item to the list:</p>
         <div class="input-container">
             <input id="taskInput" type="text" placeholder="Add a new task">
-            <button id="addTaskButton" size="50">Add</button>
-            <button id="clearButton" size="50">Clear</button>
+        </div>
+        <div class="button-container">
+          <button id="addTaskButton" size="50">Add</button>
+          <button id="clearButton" size="50">Clear</button>
         </div>
         <div id="checkboxes">
             <ul id="taskList"></ul>

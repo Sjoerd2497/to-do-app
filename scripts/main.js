@@ -6,7 +6,7 @@ const taskList = document.getElementById('taskList');
 var itemId = 0;
 
 // Update heading with current date:
-myHeading.textContent = `${day()}, ${month()} ${new Date().getDate()}`;
+myHeading.textContent = `${day()}, ${new Date().getDate()} ${month()}`;
 // Example: Monday, December 30
 
 // Apply custom style to all external links;
@@ -137,14 +137,14 @@ function sortList(){
 }
 
 function day(){
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
     const day = days[new Date().getDay()];
     return day
 }
 
 function month(){
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August",
-        "September", "October", "November", "December"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"];
     const month = months[new Date().getMonth()];
     return month
 }

@@ -17,12 +17,11 @@ I will add a live demo later!
 
 ## Project structure
 
-`/to-do-app
-|-- index.html      # Main HTML file
+/to-do-app
+|-- index.html      `# Main HTML file`
 |-- scripts/
-|   |-- main.js     # Initilizes app, event listeners
-|   |-- storage.js  # Manages storage
+|   |-- main.js     `# Initilizes app, event listeners`
+|   |-- storage.js  `# Manages storage`
 |-- styles/
-|   |-- reset.css   # CSS reset
-|   |-- styles.css  # Stylesheet
-`
+|   |-- reset.css   `# CSS reset`
+|   |-- styles.css  `# Stylesheet`

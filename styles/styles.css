@@ -109,7 +109,9 @@ nav{
 
 
 /* 
-The following 4 classes are for the list items:
+The following 4 classes are for the list items.
+List items are retrieved by their class name in code.
+Renaming these classes will need additional refactoring!
 */
 .list-item{
     display: flex;
@@ -132,6 +134,16 @@ The following 4 classes are for the list items:
     font-size: 12px;
     margin: 0px 0 0px 10px;
     text-decoration: underline;
+}
+
+.editinput{
+    line-height: 1.5em;
+    font-size: 18px;
+    margin: 0 !important;
+    padding: 4px 0 4px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #d8d8d8;
+    box-shadow: unset !important;
 }
 
 
@@ -168,15 +180,7 @@ The following 4 classes are for the list items:
     }
 }
 
-.editinput{
-    line-height: 1.5em;
-    font-size: 18px;
-    margin: 0 !important;
-    padding: 4px 0 4px 0 !important;
-    border-radius: 4px !important;
-    border: 1px solid #d8d8d8;
-    box-shadow: unset !important;
-}
+
 
 .nav-item{
     color: #4f4f4f;

@@ -34,10 +34,12 @@
           <button id="clearButton" size="50">Clear</button>
         </div>
         <div id="checkboxes">
-            <ul id="taskList"></ul>
+            <ul id="taskList">
+              <li id="list99" class="list-item"><input type="checkbox" class="checkbox" id="checkbox99" onclick="clickCheckBox(id)"><span class="list-text">List item 1</span><a href="javascript:void(0);" id="editlink99" onclick="editListItem(id)" class="edit-link">(edit)</a></li>
+            </ul>
         </div>
       </div>
     </div>
-    <script src="scripts/main.js"></script>
+    <script type="module" src="scripts/main.js"></script> 
   </body>
 </html>

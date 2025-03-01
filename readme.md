@@ -12,6 +12,8 @@ I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 ## 💡 Future improvements
 
 * Save the list in storage
+* Add sidebar button
+* Re-ordering lists by drag and drop
 * Create multiple lists
 
 ## 🖥️ Demo

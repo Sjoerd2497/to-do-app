@@ -4,7 +4,7 @@ export class TodoList {
     //
     name;       // Name of this list, for example: "My to-do list"
     itemId;     // The id counter for the list items
-    taskList;   // The list object on the web page
+    taskList;   // The list object on the web page containing list items
 
     //
     // Class methods:
@@ -72,11 +72,10 @@ export class TodoList {
         const editLink = event.target;
         const listItem = editLink.parentNode;
         const checkBox = listItem.getElementsByClassName("checkbox")[0];
+        const spanItemText = listItem.getElementsByClassName("list-text")[0];
         checkBox.disabled = true; // Disable checkbox
         editLink.remove(); // Remove edit link
 
-        
-        const listItemText = listItem.getElementsByClassName("list-text")[0].textContent;
     
         // [ChatGPT code]
         listItem.childNodes.forEach(node => {
@@ -89,15 +88,20 @@ export class TodoList {
         const editInput = document.createElement('input');
         editInput.setAttribute("type", "text");
         editInput.setAttribute("class", "editinput")
-        editInput.value = listItemText;
+        editInput.value = spanItemText.textContent;
+        spanItemText.remove();
+
         listItem.insertAdjacentElement('beforeend', editInput);
         editInput.focus(); // Puts cursor in text input field
         editInput.addEventListener("keydown", (event) => {
             // If the user presses the "Enter" key:
             if (event.key === "Enter"){
-                listItem.getElementsByClassName("list-text")[0].textContent = editInput.value.trim();
+                const spanItemText = TodoList.createListTextSpan();
+                spanItemText.textContent = editInput.value.trim();
+                editInput.remove();
                 checkBox.disabled = false; 
                 const editLink = TodoList.createEditLink();
+                listItem.insertAdjacentElement('afterbegin', spanItemText);
                 listItem.insertAdjacentElement('afterbegin', checkBox);
                 listItem.insertAdjacentElement('beforeend', editLink);
             }  
@@ -185,4 +189,56 @@ export class TodoList {
             }
         });
     }
+}
+
+
+
+/**
+ * A ListItem is item on a TodoList.
+ * 
+ * Each list item has:  
+ * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
+ */
+class ListItem{
+    // Each list item part has its own CSS class:
+    // li: "list-item"
+    // input: "checkbox"
+    // span: "list-text"
+    // a: "edit-link"
+
+    //
+    // Class fields:
+    //
+    li;         // The <li> that is the parent, is a flex container
+    input;      // The checkbox on the list item
+    span;       // Contains the text for the list item
+    a;          // The edit link to edit the list item
+    checked;    // Whether the item is checked or not ('completed')
+
+    //
+    // Class methods:
+    //
+    /** 
+     * Create a DocumentFragment containing the contents of 1 ListItem.  
+     * Each ListItem has:  
+     * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
+     * @param {string} listItemText  Whatever text should go into the list item
+     * @param {string} id            A unique id for this list item
+     * @returns A [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (MDN Web Docs)
+     * */
+    constructor(listItemText, id) {
+        const listItemFragment = new DocumentFragment();
+
+        this.li = TodoList.createListItem(id);
+        this.input = TodoList.createCheckbox();
+        this.span = TodoList.createListTextSpan(listItemText);
+        this.a = TodoList.createEditLink();
+        this.checked = false;
+
+        this.li.append(this.input, this.span, this.a);
+        listItemFragment.append(this.li);
+        
+        return listItemFragment;
+    }
+    
 }

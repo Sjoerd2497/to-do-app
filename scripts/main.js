@@ -41,7 +41,7 @@ addTaskButton.addEventListener('click', myList.addListItem);
 taskInput.addEventListener('keydown', (event) =>{
     // If the user presses the "Enter" key:
     if (event.key === "Enter"){
-        myList.addListItem(taskInput.value);
+        myList.addListEntry(taskInput.value);
         taskInput.value = ''; // Clear the input
     }
 });

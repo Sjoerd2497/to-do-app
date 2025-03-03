@@ -75,27 +75,6 @@ input{
     font-size: 16px;
 }
 
-input[type="text"]{
-    margin: 1rem 0 1em 0;
-    padding: 8px 1rem 8px 1rem;
-    flex: auto;
-    border-radius: 10px;
-    border: 1px solid #d8d8d8;
-    box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1),
-    0px 4px 12px 4px rgba(60, 64, 67, 0.05);
-}
-
-input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
-    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
-}
-
-input[type="text"]:hover{
-    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
-    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
-}
-
 nav{
     padding: 1.5rem 0 0 0;
 }
@@ -115,7 +94,7 @@ Renaming these classes will need additional refactoring!
 */
 .list-item{
     display: flex;
-    align-items: baseline;
+    align-items: center;
     color: black;
     font-size: 18px;
     gap: 0px;
@@ -128,12 +107,29 @@ Renaming these classes will need additional refactoring!
 }
 .list-text{
     flex-grow: 1;
+    display: block;
+    line-height: 2rem;
+    min-height: calc(2rem + 2px);
+    padding: 1px 2px 1px 2px;
+}
+.list-text:hover{
+    background-color: #f6f8fa;
 }
 .edit-link{
     color: black;
     font-size: 12px;
     margin: 0px 0 0px 10px;
     text-decoration: underline;
+}
+.list-input{
+    border: 0;
+    font-size: 18px;
+    flex-grow: 1;
+}
+
+.list-input:focus{
+    background-color: #f6f8fa;
+    outline: none;
 }
 
 .editinput{
@@ -253,6 +249,27 @@ Renaming these classes will need additional refactoring!
         right: unset;
         bottom: unset;
     }
+}
+
+.todo-input{
+    margin: 1rem 0 1em 0;
+    padding: 8px 1rem 8px 1rem;
+    flex: auto;
+    border-radius: 10px;
+    border: 1px solid #d8d8d8;
+    box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1),
+    0px 4px 12px 4px rgba(60, 64, 67, 0.05);
+}
+
+.todo-input:focus{
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+}
+
+.todo-input:hover{
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
 }
 
 .main-content{

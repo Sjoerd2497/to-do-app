@@ -23,43 +23,13 @@ export class TodoList {
 
 
     // Add an item to the list. 
-    addListItem(itemText) {
+    addListEntry(itemText) {
         itemText.trim();
         if (itemText) {
-            const listItem = TodoList.createListItemFragment(itemText, this.itemId);
-            this.taskList.prepend(listItem); // prepend() adds to the top of the list
+            const listItem = new ListEntry(itemText, this.itemId);
+            this.taskList.prepend(listItem);
             this.itemId++;
         }
-    }
-
-
-
-    /** 
-     * Create a DocumentFragment containing the contents of 1 list item.  
-     * Each list item has:  
-     * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
-     * @param {string} listItemText  Whatever text should go into the list item
-     * @param {string} id            A unique id for this list item
-     * @returns A [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (MDN Web Docs)
-     * */
-    static createListItemFragment(listItemText, id) {
-        // Each list item has a class
-        // li: "list-item"
-        // input: "checkbox"
-        // span: "list-text"
-        // a: "edit-link"
-
-        const listItemFragment = new DocumentFragment();
-
-        const li = TodoList.createListItem(id);
-        const input = TodoList.createCheckbox();
-        const span = TodoList.createListTextSpan(listItemText);
-        const a = TodoList.createEditLink();
-
-        li.append(input, span, a);
-        listItemFragment.append(li);
-        
-        return listItemFragment;
     }
     
 
@@ -126,47 +96,6 @@ export class TodoList {
         }
         sortList();
     }
-    
-
-
-    static createListItem(id){
-        const li = document.createElement("li");
-        li.setAttribute("class", "list-item");
-        li.setAttribute("id", id);
-        return li;
-    }
-
-
-
-    static createCheckbox(){
-        const input = document.createElement("input");
-        input.setAttribute("class", "checkbox");
-        input.setAttribute("type", "checkbox");
-        input.addEventListener('click', TodoList.clickCheckBox)
-        return input;
-    }
-
-
-
-    static createListTextSpan(listItemText){
-        const span = document.createElement("span");
-        span.setAttribute("class", "list-text");
-        span.textContent = listItemText;
-        return span;
-    }
-
-
-
-    static createEditLink(){
-        const a = document.createElement('a');
-        a.setAttribute("href","javascript:void(0);");
-        a.setAttribute("class", "edit-link");
-        a.textContent = "(edit)";
-        a.addEventListener('click', TodoList.editListItem)
-        return a;
-    }
-
-
 
     clearList(){
         [...this.taskList.children].forEach((element) => {
@@ -177,14 +106,10 @@ export class TodoList {
         });
     }
 
-
-
     // Move checked items to the bottom of the list.
     sortList(){
         [...this.taskList.children].forEach((element) => {
-            const checkBox = element.getElementByClassName("checkbox")[0];
-
-            if (checkBox.checked === true){
+            if (element.checkbox.checked){
                 taskList.appendChild(element);
             }
         });
@@ -199,7 +124,16 @@ export class TodoList {
  * Each list item has:  
  * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
  */
-class ListItem{
+class ListEntry{
+    //
+    // Class fields:
+    //
+    li;         // The <li> that is the parent, is a flex container
+    checkbox;   // The checkbox on the list item
+    span;       // Contains the text for the list item
+    listInput;  // Input field for editing the list item
+    id;         // Identifier of this list item
+
     // Each list item part has its own CSS class:
     // li: "list-item"
     // input: "checkbox"
@@ -207,38 +141,90 @@ class ListItem{
     // a: "edit-link"
 
     //
-    // Class fields:
-    //
-    li;         // The <li> that is the parent, is a flex container
-    input;      // The checkbox on the list item
-    span;       // Contains the text for the list item
-    a;          // The edit link to edit the list item
-    checked;    // Whether the item is checked or not ('completed')
-
-    //
     // Class methods:
     //
     /** 
      * Create a DocumentFragment containing the contents of 1 ListItem.  
      * Each ListItem has:  
-     * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
+     * `<li> <input type="checkbox"> <span>List item text</span> </li>`
      * @param {string} listItemText  Whatever text should go into the list item
      * @param {string} id            A unique id for this list item
      * @returns A [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (MDN Web Docs)
      * */
     constructor(listItemText, id) {
         const listItemFragment = new DocumentFragment();
-
-        this.li = TodoList.createListItem(id);
-        this.input = TodoList.createCheckbox();
-        this.span = TodoList.createListTextSpan(listItemText);
-        this.a = TodoList.createEditLink();
-        this.checked = false;
-
-        this.li.append(this.input, this.span, this.a);
+        this.id = id;
+        this.li = this.createListItem(this.id);
+        this.checkbox = this.createCheckbox();
+        this.span = this.createListTextSpan(listItemText);
+        this.li.append(this.checkbox, this.span);
         listItemFragment.append(this.li);
-        
         return listItemFragment;
     }
-    
+
+    // Remove the span with the text, create text input
+    editListItem(){
+        if(this.checkbox.checked){return}
+        this.listInput = this.createListInput(this.span.textContent)
+        this.li.append(this.listInput);
+        this.span.remove();
+        this.listInput.focus();
+        this.listInput.addEventListener("keydown", (event) => {
+            // If the user presses the "Enter" key:
+            if (event.key === "Enter"){
+                const spanItemText = this.createListTextSpan();
+                this.span.textContent = this.listInput.value.trim();
+                this.listInput.remove();
+                this.li.append(this.span);
+            }  
+        });
+
+        this.listInput.addEventListener("focusout", (event) => {
+            const spanItemText = this.createListTextSpan();
+            this.span.textContent = this.listInput.value.trim();
+            this.listInput.remove();
+            this.checkbox.disabled = false; 
+            this.li.append(this.span);
+        });
+    }
+
+    clickCheckBox(){
+        if (this.checkbox.checked === true){
+            this.li.style.textDecoration = "line-through";
+        }
+        else if (this.checkbox.checked === false){
+            this.li.style.textDecoration = "none";
+        }
+        //sortList();
+    }
+
+    createListItem(id){
+        const li = document.createElement("li");
+        li.setAttribute("class", "list-item");
+        li.setAttribute("id", id);
+        return li;
+    }
+
+    createCheckbox(){
+        const checkbox = document.createElement("input");
+        checkbox.setAttribute("class", "checkbox");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.addEventListener('click', this.clickCheckBox.bind(this));
+        return checkbox;
+    }
+
+    createListTextSpan(listItemText){
+        const span = document.createElement("span");
+        span.setAttribute("class", "list-text");
+        span.textContent = listItemText;
+        span.addEventListener('click', this.editListItem.bind(this)); // I hate JavaScript
+        return span;
+    }
+
+    createListInput(textContent){
+        const input = document.createElement("input");
+        input.setAttribute("class", "list-input");
+        input.value = textContent;
+        return input;
+    }
 }

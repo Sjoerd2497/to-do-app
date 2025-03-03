@@ -1,6 +1,7 @@
 export class TodoList {
     name;       // Name of this list, for example: "My to-do list"
     itemId;     // The id counter for the list items
+    listItems;  // Array containing all ListEntries
     taskList;   // The list object on the web page containing list items
 
     /**
@@ -12,6 +13,7 @@ export class TodoList {
         this.name = name;
         this.taskList = document.getElementById(listId);
         this.itemId = 0;
+        this.listItems = new Array();
     }
 
     // Add an item to the list. 
@@ -19,32 +21,16 @@ export class TodoList {
         itemText.trim();
         if (itemText) {
             const listItem = new ListEntry(itemText, this.itemId);
-            this.taskList.prepend(listItem);
+            const documentFragment = listItem.getDocumentFragment();
+            this.taskList.prepend(documentFragment);
+            this.listItems[this.itemId] = listItem;
             this.itemId++;
         }
     }
 
-    static clickCheckBox(event){
-        const checkBox = event.target;
-        // Grab listitem which is the parent of the checkbox:
-        const listItem = checkBox.parentNode;
-        
-        if (checkBox.checked === true){
-            listItem.style.textDecoration = "line-through";
-            listItem.getElementByClassName("edit-link")[0].remove();
-        }
-        else if (checkBox.checked === false){
-            listItem.style.textDecoration = "none";
-            const editLink = TodoList.createEditLink();
-            listItem.insertAdjacentElement('beforeend', editLink);
-        }
-        sortList();
-    }
-
     clearList(){
         [...this.taskList.children].forEach((element) => {
-            const checkBox = element.getElementByClassName("checkbox")[0];
-            if (checkBox.checked === true){
+            if (element.checkbox.checked === true){
                 element.remove();
             }
         });
@@ -52,7 +38,8 @@ export class TodoList {
 
     // Move checked items to the bottom of the list.
     sortList(){
-        [...this.taskList.children].forEach((element) => {
+        this.listItems.forEach((element) => {
+            console.log(element);
             if (element.checkbox.checked){
                 taskList.appendChild(element);
             }
@@ -64,7 +51,6 @@ export class TodoList {
 
 /**
  * A ListEntry is an item on a TodoList.
- * 
  * Each ListEntry has:  
  * `<li> <input type="checkbox"> <span>List item text</span> </li>`
  */
@@ -89,11 +75,14 @@ class ListEntry{
      * @returns A [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (MDN Web Docs)
      * */
     constructor(listItemText, id) {
-        const listItemFragment = new DocumentFragment();
-        this.id = id;
+        this.id = "li" + id;
         this.li = this.createListItem(this.id);
         this.checkbox = this.createCheckbox();
         this.span = this.createListTextSpan(listItemText);
+    }
+
+    getDocumentFragment(){
+        const listItemFragment = new DocumentFragment();
         this.li.append(this.checkbox, this.span);
         listItemFragment.append(this.li);
         return listItemFragment;

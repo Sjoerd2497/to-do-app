@@ -135,7 +135,7 @@ Renaming these classes will need additional refactoring!
 }
 
 .list-input:focus{
-    background-color: #f6f8fa;
+    background-color: #eeeeee;
     outline: none;
 }
 
@@ -213,7 +213,7 @@ Renaming these classes will need additional refactoring!
 }
 
 .nav-item:hover{
-    background-color: rgb(210, 210, 210);
+    background-color: #d2d2d2;
     
 }
 

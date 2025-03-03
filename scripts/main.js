@@ -37,7 +37,10 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
 var myList = new todo.TodoList("mylist","taskList");
 
 // Add event listeners for the Add button and when 'Enter' is pressed:
-addTaskButton.addEventListener('click', myList.addListItem);
+addTaskButton.addEventListener('click', (event) =>{
+    myList.addListEntry(taskInput.value);
+    taskInput.value = '';
+});
 taskInput.addEventListener('keydown', (event) =>{
     // If the user presses the "Enter" key:
     if (event.key === "Enter"){
@@ -45,7 +48,7 @@ taskInput.addEventListener('keydown', (event) =>{
         taskInput.value = ''; // Clear the input
     }
 });
-clearButton.addEventListener('click', myList.clearList);
+clearButton.addEventListener('click', myList.clearList.bind(myList));
 
 
 

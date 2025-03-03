@@ -162,7 +162,7 @@ Renaming these classes will need additional refactoring!
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: stretch;
 }
 
 @media (min-width: 768px){
@@ -170,6 +170,7 @@ Renaming these classes will need additional refactoring!
         border: 1px;
         border-color: #d8d8d8;
         border-style: none none solid none;
+        align-items: baseline;
     }
 }
 
@@ -177,10 +178,24 @@ Renaming these classes will need additional refactoring!
     .header-container{
         flex-direction: row;
         padding: 0 0 1.5rem 0;
+        align-items: baseline;
     }
 }
 
+.main-title{
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 16px;
+}
 
+#dateText {
+    text-wrap: nowrap;
+    flex-shrink: 0;
+}
 
 .nav-item{
     color: #4f4f4f;
@@ -243,6 +258,7 @@ Renaming these classes will need additional refactoring!
 .main-content{
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     flex-grow: 1;
+    min-width: 0;
 }
 
 .main-content > *{
@@ -262,7 +278,6 @@ Renaming these classes will need additional refactoring!
         max-width: 44rem;
     }
 }
-
 
 .main-content > *:nth-child(2){
     margin-top: 2rem;

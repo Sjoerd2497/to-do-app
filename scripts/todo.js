@@ -1,14 +1,8 @@
 export class TodoList {
-    //
-    // Class fields:
-    //
     name;       // Name of this list, for example: "My to-do list"
     itemId;     // The id counter for the list items
     taskList;   // The list object on the web page containing list items
 
-    //
-    // Class methods:
-    //
     /**
      * Create a new list.
      * @param {string} name 
@@ -20,8 +14,6 @@ export class TodoList {
         this.itemId = 0;
     }
 
-
-
     // Add an item to the list. 
     addListEntry(itemText) {
         itemText.trim();
@@ -31,54 +23,6 @@ export class TodoList {
             this.itemId++;
         }
     }
-    
-
-
-    /**
-     * Edit an item from the list.
-     * @param {string} listId       The id of the list item to-be-edited
-     */
-    static editListItem(event){
-        const editLink = event.target;
-        const listItem = editLink.parentNode;
-        const checkBox = listItem.getElementsByClassName("checkbox")[0];
-        const spanItemText = listItem.getElementsByClassName("list-text")[0];
-        checkBox.disabled = true; // Disable checkbox
-        editLink.remove(); // Remove edit link
-
-    
-        // [ChatGPT code]
-        listItem.childNodes.forEach(node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                node.textContent = ""; // Modify the text only
-            }
-        });
-    
-        // Create new input field
-        const editInput = document.createElement('input');
-        editInput.setAttribute("type", "text");
-        editInput.setAttribute("class", "editinput")
-        editInput.value = spanItemText.textContent;
-        spanItemText.remove();
-
-        listItem.insertAdjacentElement('beforeend', editInput);
-        editInput.focus(); // Puts cursor in text input field
-        editInput.addEventListener("keydown", (event) => {
-            // If the user presses the "Enter" key:
-            if (event.key === "Enter"){
-                const spanItemText = TodoList.createListTextSpan();
-                spanItemText.textContent = editInput.value.trim();
-                editInput.remove();
-                checkBox.disabled = false; 
-                const editLink = TodoList.createEditLink();
-                listItem.insertAdjacentElement('afterbegin', spanItemText);
-                listItem.insertAdjacentElement('afterbegin', checkBox);
-                listItem.insertAdjacentElement('beforeend', editLink);
-            }  
-        });
-    }
-
-
 
     static clickCheckBox(event){
         const checkBox = event.target;
@@ -119,30 +63,23 @@ export class TodoList {
 
 
 /**
- * A ListItem is item on a TodoList.
+ * A ListEntry is an item on a TodoList.
  * 
- * Each list item has:  
- * `<li> <input type="checkbox"> <span>List item text</span> <a>(edit)</a> </li>`
+ * Each ListEntry has:  
+ * `<li> <input type="checkbox"> <span>List item text</span> </li>`
  */
 class ListEntry{
-    //
-    // Class fields:
-    //
     li;         // The <li> that is the parent, is a flex container
     checkbox;   // The checkbox on the list item
     span;       // Contains the text for the list item
     listInput;  // Input field for editing the list item
     id;         // Identifier of this list item
-
     // Each list item part has its own CSS class:
     // li: "list-item"
-    // input: "checkbox"
-    // span: "list-text"
-    // a: "edit-link"
+    // checkbox: "checkbox"
+    // span: "list-text" or "lsit-text-checked" when the checkbox is checked
+    // listInput: "list-input"
 
-    //
-    // Class methods:
-    //
     /** 
      * Create a DocumentFragment containing the contents of 1 ListItem.  
      * Each ListItem has:  

@@ -115,6 +115,13 @@ Renaming these classes will need additional refactoring!
 .list-text:hover{
     background-color: #f6f8fa;
 }
+.list-text-checked{
+    flex-grow: 1;
+    display: block;
+    line-height: 2rem;
+    min-height: calc(2rem + 2px);
+    padding: 1px 2px 1px 2px;
+}
 .edit-link{
     color: black;
     font-size: 12px;

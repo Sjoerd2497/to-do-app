@@ -191,9 +191,11 @@ class ListEntry{
     clickCheckBox(){
         if (this.checkbox.checked === true){
             this.li.style.textDecoration = "line-through";
+            this.span.setAttribute("class", "list-text-checked"); // Change style to remove the hover styling
         }
         else if (this.checkbox.checked === false){
             this.li.style.textDecoration = "none";
+            this.span.setAttribute("class", "list-text");
         }
         //sortList();
     }

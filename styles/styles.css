@@ -103,14 +103,14 @@ Renaming these classes will need additional refactoring!
     width: 100%;
 }
 .checkbox{
-    margin-right: 20px;
+    margin-right: 14px;
 }
 .list-text{
     flex-grow: 1;
     display: block;
     line-height: 2rem;
     min-height: calc(2rem + 2px);
-    padding: 1px 2px 1px 2px;
+    padding: 1px 2px 1px 8px;
 }
 .list-text:hover{
     background-color: #f6f8fa;
@@ -120,7 +120,7 @@ Renaming these classes will need additional refactoring!
     display: block;
     line-height: 2rem;
     min-height: calc(2rem + 2px);
-    padding: 1px 2px 1px 2px;
+    padding: 1px 2px 1px 8px;
 }
 .edit-link{
     color: black;
@@ -131,6 +131,7 @@ Renaming these classes will need additional refactoring!
 .list-input{
     border: 0;
     font-size: 18px;
+    padding-left: 8px;
     flex-grow: 1;
 }
 

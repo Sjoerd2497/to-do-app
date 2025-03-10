@@ -88,9 +88,7 @@ nav{
 
 
 /* 
-The following 4 classes are for the list items.
-List items are retrieved by their class name in code.
-Renaming these classes will need additional refactoring!
+The following classes are for the list items.
 */
 .list-item{
     display: flex;

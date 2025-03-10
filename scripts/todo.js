@@ -1,8 +1,8 @@
 export class TodoList {
-    name;       // Name of this list, for example: "My to-do list"
-    itemId;     // The id counter for the list items
-    listItems;  // Array containing all ListEntries
-    taskList;   // The list object on the web page containing list items
+    name;               // Name of this list, for example: "My to-do list"
+    itemIdCounter;      // The id counter for the list items
+    listItems;          // Array containing all ListEntries
+    taskList;           // The list object on the web page containing list items
 
     /**
      * Create a new list.
@@ -12,7 +12,7 @@ export class TodoList {
     constructor(name, listId){
         this.name = name;
         this.taskList = document.getElementById(listId);
-        this.itemId = 0;
+        this.itemIdCounter = 0;
         this.listItems = new Array();
     }
 
@@ -20,11 +20,11 @@ export class TodoList {
     addListEntry(itemText) {
         itemText.trim();
         if (itemText) {
-            const listItem = new ListEntry(itemText, this.itemId);
-            const documentFragment = listItem.getDocumentFragment();
-            this.taskList.prepend(documentFragment);
-            this.listItems[this.itemId] = listItem;
-            this.itemId++;
+            const listItem = new ListEntry(itemText, this.itemIdCounter);
+            console.log(listItem);
+            this.taskList.prepend(listItem.docFragment);
+            this.listItems[this.itemIdCounter] = listItem;
+            this.itemIdCounter++;
         }
     }
 
@@ -55,15 +55,19 @@ export class TodoList {
  * `<li> <input type="checkbox"> <span>List item text</span> </li>`
  */
 class ListEntry{
-    li;         // The <li> that is the parent, is a flex container
-    checkbox;   // The checkbox on the list item
-    span;       // Contains the text for the list item
-    listInput;  // Input field for editing the list item
-    id;         // Identifier of this list item
+    li;             // The <li> that is the parent, is a flex container
+    checkbox;       // The checkbox on the list item
+    span;           // Contains the text for the list item
+    listInput;      // Input field for editing the list item
+    id;             // Identifier of this list item
+    docFragment;    // The document fragment of the list item to be added to the list
+                    // The fragment has the form: 
+                    // `<li> <input type="checkbox"> <span>List item text</span> </li>`
+                    
     // Each list item part has its own CSS class:
     // li: "list-item"
     // checkbox: "checkbox"
-    // span: "list-text" or "lsit-text-checked" when the checkbox is checked
+    // span: "list-text" or "list-text-checked" when the checkbox is checked
     // listInput: "list-input"
 
     /** 
@@ -72,16 +76,17 @@ class ListEntry{
      * `<li> <input type="checkbox"> <span>List item text</span> </li>`
      * @param {string} listItemText  Whatever text should go into the list item
      * @param {string} id            A unique id for this list item
-     * @returns A [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) (MDN Web Docs)
      * */
     constructor(listItemText, id) {
         this.id = "li" + id;
         this.li = this.createListItem(this.id);
         this.checkbox = this.createCheckbox();
         this.span = this.createListTextSpan(listItemText);
+        this.docFragment = this.createDocumentFragment();
+        console.log(this);
     }
 
-    getDocumentFragment(){
+    createDocumentFragment(){
         const listItemFragment = new DocumentFragment();
         this.li.append(this.checkbox, this.span);
         listItemFragment.append(this.li);

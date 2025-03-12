@@ -1,7 +1,10 @@
-export class TodoList {
+import * as utils from './utils.js';
+import * as storage from './storage.js';
+export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
+
     name;               // Name of this list, for example: "My to-do list"
     itemIdCounter;      // The id counter for the list items
-    listItems;          // Array containing all ListEntries
+    listEntries;        // Array containing all items (objects of the ListEntry class)
     taskList;           // The list object on the web page containing list items
 
     /**
@@ -13,37 +16,58 @@ export class TodoList {
         this.name = name;
         this.taskList = document.getElementById(listId);
         this.itemIdCounter = 0;
-        this.listItems = new Array();
+        this.listEntries = new Array();
+    }
+
+    // Executes everytime the TodoList or a ListEntry is changed
+    onListMutation(){
+        storage.saveList(this);
     }
 
     // Add an item to the list. 
     addListEntry(itemText) {
         itemText.trim();
         if (itemText) {
-            const listItem = new ListEntry(itemText, this.itemIdCounter);
-            console.log(listItem);
-            this.taskList.prepend(listItem.docFragment);
-            this.listItems[this.itemIdCounter] = listItem;
+            const listEntry = new ListEntry(itemText, this.itemIdCounter, this.sortList.bind(this), this.onListMutation.bind(this));
+            this.taskList.prepend(listEntry.docFragment);
+            this.listEntries[this.itemIdCounter] = listEntry;
             this.itemIdCounter++;
+            console.log(this);
         }
+        this.onListMutation();
     }
 
+    removeListEntry(id) {
+        // Remove text from id:
+        id = utils.extractNumberFromString(id);
+        // Remove the <li> from the DOM
+        this.listEntries[id].li.remove();
+        // Set ListEntry object to null
+        this.listEntries[id] = null;
+        // Remove ListEntry object from array
+        this.listEntries.splice(id,1);
+        console.log(this);
+        this.onListMutation();
+    }
+
+    // Remove checked items from the list
     clearList(){
-        [...this.taskList.children].forEach((element) => {
-            if (element.checkbox.checked === true){
-                element.remove();
+        this.listEntries.forEach((element) => {
+            if (element.checkbox.checked){
+                this.removeListEntry(element.id)
             }
         });
+        this.onListMutation();
     }
 
     // Move checked items to the bottom of the list.
     sortList(){
-        this.listItems.forEach((element) => {
-            console.log(element);
+        this.listEntries.forEach((element) => {
             if (element.checkbox.checked){
-                taskList.appendChild(element);
+                taskList.appendChild(element.li);
             }
         });
+        // onListMutation() // !!! Maybe not needed here --> only changes DOM
     }
 }
 
@@ -55,14 +79,21 @@ export class TodoList {
  * `<li> <input type="checkbox"> <span>List item text</span> </li>`
  */
 class ListEntry{
+// Question: Would it be better to make everything private? Or everything public? Is using a get/set method for entryText a good choice?
+
+    id;             // Identifier of this list item
+    #entryText;     // The text of the list item
+    setEntryText(text){this.#entryText = text;}
+    getEntryText(){return this.#entryText;}
     li;             // The <li> that is the parent, is a flex container
     checkbox;       // The checkbox on the list item
     span;           // Contains the text for the list item
     listInput;      // Input field for editing the list item
-    id;             // Identifier of this list item
     docFragment;    // The document fragment of the list item to be added to the list
                     // The fragment has the form: 
                     // `<li> <input type="checkbox"> <span>List item text</span> </li>`
+    sortList;       // The the sortList() function of the TodoList parent
+    onListMutation  // The onListMutation() funciton of the TodoList parent
                     
     // Each list item part has its own CSS class:
     // li: "list-item"
@@ -71,21 +102,26 @@ class ListEntry{
     // listInput: "list-input"
 
     /** 
-     * Create a DocumentFragment containing the contents of 1 ListItem.  
+     * Create a ListEntry.  
      * Each ListItem has:  
      * `<li> <input type="checkbox"> <span>List item text</span> </li>`
-     * @param {string} listItemText  Whatever text should go into the list item
-     * @param {string} id            A unique id for this list item
+     * @param {string} listEntryText  Whatever text should go into the list item
+     * @param {string} id             A unique id for this list item
+     * @param {function} sortList     The the sortList() function of the TodoList parent
+     * @param {function} onListMutation   The onListMutation() funciton of the TodoList parent
      * */
-    constructor(listItemText, id) {
+    constructor(listEntryText, id, sortList, onListMutation) {
         this.id = "li" + id;
+        this.setEntryText(listEntryText);
         this.li = this.createListItem(this.id);
         this.checkbox = this.createCheckbox();
-        this.span = this.createListTextSpan(listItemText);
+        this.span = this.createListTextSpan(this.getEntryText());
         this.docFragment = this.createDocumentFragment();
-        console.log(this);
+        this.sortList = sortList;
+        this.onListMutation = onListMutation;
     }
 
+    // Create a DocumentFragment containing the contents of 1 ListItem.  
     createDocumentFragment(){
         const listItemFragment = new DocumentFragment();
         this.li.append(this.checkbox, this.span);
@@ -93,33 +129,38 @@ class ListEntry{
         return listItemFragment;
     }
 
-    // Remove the span with the text, create text input
+    // Removes the span with the text, create text input
     editListItem(){
-        if(this.checkbox.checked){return}
-        this.listInput = this.createListInput(this.span.textContent)
+        if(this.checkbox.checked){return;}
+        
+        // Swap <span> for <input>
+        this.listInput = this.createListInput(this.getEntryText());
         this.li.append(this.listInput);
         this.span.remove();
         this.listInput.focus();
+
+        // Save the changes on [Enter] or focusout:
         this.listInput.addEventListener("keydown", (event) => {
-            // If the user presses the "Enter" key:
             if (event.key === "Enter"){
-                const spanItemText = this.createListTextSpan();
-                this.span.textContent = this.listInput.value.trim();
-                this.listInput.remove();
-                this.li.append(this.span);
+                this.saveListItem();
             }  
         });
-
         this.listInput.addEventListener("focusout", (event) => {
-            const spanItemText = this.createListTextSpan();
-            this.span.textContent = this.listInput.value.trim();
-            this.listInput.remove();
-            this.checkbox.disabled = false; 
-            this.li.append(this.span);
+            this.saveListItem();
         });
     }
 
-    clickCheckBox(){
+    saveListItem(){
+        // Update the entryText
+        this.setEntryText(this.listInput.value.trim());
+        // Switch <input> for <span> and set its text:
+        this.listInput.remove();
+        this.li.append(this.span);
+        this.span.textContent = this.getEntryText(); 
+        this.parentList.onListMutation(); // List is changed!       
+    }
+
+    clickCheckbox(){
         if (this.checkbox.checked === true){
             this.li.style.textDecoration = "line-through";
             this.span.setAttribute("class", "list-text-checked"); // Change style to remove the hover styling
@@ -128,8 +169,11 @@ class ListEntry{
             this.li.style.textDecoration = "none";
             this.span.setAttribute("class", "list-text");
         }
-        //sortList();
+        this.sortList();
+        this.onListMutation(); // List is changed!
     }
+
+    // Creating the elements that are part of a ListEntry (<li>, <input checkbox>, <span> and <input>)
 
     createListItem(id){
         const li = document.createElement("li");
@@ -142,7 +186,7 @@ class ListEntry{
         const checkbox = document.createElement("input");
         checkbox.setAttribute("class", "checkbox");
         checkbox.setAttribute("type", "checkbox");
-        checkbox.addEventListener('click', this.clickCheckBox.bind(this));
+        checkbox.addEventListener('click', this.clickCheckbox.bind(this));
         return checkbox;
     }
 
@@ -150,7 +194,7 @@ class ListEntry{
         const span = document.createElement("span");
         span.setAttribute("class", "list-text");
         span.textContent = listItemText;
-        span.addEventListener('click', this.editListItem.bind(this)); // I hate JavaScript
+        span.addEventListener('click', this.editListItem.bind(this)); // I don't like using 'this' in JavaScript
         return span;
     }
 

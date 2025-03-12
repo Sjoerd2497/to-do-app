@@ -1,6 +1,10 @@
 import * as todo from './todo.js';
 import * as utils from './utils.js';
 
+// Fun things to investigate in the future:
+// - Look into decorator patterns for the TodoList and ListEntry classes
+// - Recreate this project in React once I learn it
+
 // 0. Create a class for a list.
 //      The class has...
 //      - A list item id counter (increases for each item created)
@@ -12,6 +16,10 @@ import * as utils from './utils.js';
 //      - Edit button/link
 // 2. Create function to append list with fragment (create new list item)
 // 3. ...
+
+// Load list if there is one
+// Create list if there is none
+// 
 
 const myHeading = document.getElementById('dateText');
 const taskInput = document.getElementById('taskInput');
@@ -34,7 +42,7 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
 });
 
 // Create a list class
-var myList = new todo.TodoList("mylist","taskList");
+const myList = new todo.TodoList("mylist","taskList");
 
 // Add event listeners for the Add button and when 'Enter' is pressed:
 addTaskButton.addEventListener('click', (event) =>{

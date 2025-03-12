@@ -1,7 +1,8 @@
 @import 'reset.css';
 
 html{
-    font-family: Inter, sans-serif;
+    font-family: 'Segoe UI', Inter, sans-serif;
+    font-weight: 300;
     font-size: 18px;
     background-color: white;
 }
@@ -202,7 +203,8 @@ The following classes are for the list items.
 .nav-item{
     color: #4f4f4f;
     font-size: 16px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-weight: 300;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -16,3 +16,9 @@ export function extractNumberFromString(text){
     const number = numberArr[0];
     return number;
 }
+
+export function moveToEndOfArray(array, index){
+    if (index >= 0 && index < array.length){
+        array.unshift(array.splice(index,1)[0]);
+    }
+}

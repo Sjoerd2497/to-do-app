@@ -19,7 +19,7 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
         this.listEntries = new Array();
     }
 
-    // Executes everytime the TodoList or a ListEntry is changed
+    // Is called everytime the TodoList or a ListEntry is changed
     onListMutation(){
         storage.saveList(this);
     }
@@ -37,6 +37,7 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
         this.onListMutation();
     }
 
+    // Remove an item from the list
     removeListEntry(id) {
         // Remove text from id:
         id = utils.extractNumberFromString(id);
@@ -62,13 +63,29 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
 
     // Move checked items to the bottom of the list.
     sortList(){
-        this.listEntries.forEach((element) => {
-            if (element.checkbox.checked){
+        let indices = [];
+        this.listEntries.forEach((element, index) => {
+            if (element.checked){
                 taskList.appendChild(element.li);
+                
+                console.log("ListEntry id: " + element.id + ",index: " + index);
+                // Add the index of the checked element to the indices array
+                indices.push(index);
+                console.log(indices);
             }
         });
-        // onListMutation() // !!! Maybe not needed here --> only changes DOM
+        // Reorder ListEntries after loop finishes
+        indices.forEach((element) => {
+            utils.moveToEndOfArray(this.listEntries, element);
+            //this.listEntries // move index to the bo
+        });
+        this.onListMutation();
     }
+
+    // Export only the necessary properties required to rebuild the list
+    // toJSON(){
+
+    // }
 }
 
 
@@ -82,13 +99,14 @@ class ListEntry{
 // Question: Would it be better to make everything private? Or everything public? Is using a get/set method for entryText a good choice?
 
     id;             // Identifier of this list item
-    #entryText;     // The text of the list item
-    setEntryText(text){this.#entryText = text;}
-    getEntryText(){return this.#entryText;}
+    entryText;     // The text of the list item
+    setEntryText(text){this.entryText = text;}
+    getEntryText(){return this.entryText;}
     li;             // The <li> that is the parent, is a flex container
     checkbox;       // The checkbox on the list item
     span;           // Contains the text for the list item
     listInput;      // Input field for editing the list item
+    checked;        // Bool whether the ListEntry is checked.
     docFragment;    // The document fragment of the list item to be added to the list
                     // The fragment has the form: 
                     // `<li> <input type="checkbox"> <span>List item text</span> </li>`
@@ -116,6 +134,7 @@ class ListEntry{
         this.li = this.createListItem(this.id);
         this.checkbox = this.createCheckbox();
         this.span = this.createListTextSpan(this.getEntryText());
+        this.checked = false;
         this.docFragment = this.createDocumentFragment();
         this.sortList = sortList;
         this.onListMutation = onListMutation;
@@ -157,15 +176,17 @@ class ListEntry{
         this.listInput.remove();
         this.li.append(this.span);
         this.span.textContent = this.getEntryText(); 
-        this.parentList.onListMutation(); // List is changed!       
+        this.onListMutation(); // List is changed!       
     }
 
     clickCheckbox(){
         if (this.checkbox.checked === true){
+            this.checked = true;
             this.li.style.textDecoration = "line-through";
             this.span.setAttribute("class", "list-text-checked"); // Change style to remove the hover styling
         }
         else if (this.checkbox.checked === false){
+            this.checked = false;
             this.li.style.textDecoration = "none";
             this.span.setAttribute("class", "list-text");
         }

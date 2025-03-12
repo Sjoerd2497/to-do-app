@@ -5,5 +5,5 @@ export function saveList(obj){
     const listJSON = JSON.stringify(obj);
     // Add a check for list name duplicates?
     localStorage.setItem(obj.name, listJSON); // The key is the list name
-    console.log(listJSON);
+    //console.log(listJSON);
 }

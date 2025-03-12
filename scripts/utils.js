@@ -19,6 +19,6 @@ export function extractNumberFromString(text){
 
 export function moveToEndOfArray(array, index){
     if (index >= 0 && index < array.length){
-        array.unshift(array.splice(index,1)[0]);
+        array.push(array.splice(index,1)[0]);
     }
 }

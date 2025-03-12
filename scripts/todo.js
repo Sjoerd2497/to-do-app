@@ -12,15 +12,16 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
      * @param {string} name 
      * @param {string} listId 
      */
-    constructor(name, listId){
+    constructor(name, listId) {
         this.name = name;
         this.taskList = document.getElementById(listId);
         this.itemIdCounter = 0;
-        this.listEntries = new Array();
+        this.listEntries = [];
+        console.log(this);
     }
 
     // Is called everytime the TodoList or a ListEntry is changed
-    onListMutation(){
+    onListMutation() {
         storage.saveList(this);
     }
 
@@ -30,55 +31,58 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
         if (itemText) {
             const listEntry = new ListEntry(itemText, this.itemIdCounter, this.sortList.bind(this), this.onListMutation.bind(this));
             this.taskList.prepend(listEntry.docFragment);
-            this.listEntries[this.itemIdCounter] = listEntry;
+            this.listEntries.unshift(listEntry); // Put in front of array
             this.itemIdCounter++;
-            console.log(this);
         }
         this.onListMutation();
     }
 
     // Remove an item from the list
-    removeListEntry(id) {
-        // Remove text from id:
-        id = utils.extractNumberFromString(id);
+    removeListEntries() {
+        this.listEntries.forEach((entry) => {
+            if (element === null){
+                
+            }
+        })
         // Remove the <li> from the DOM
         this.listEntries[id].li.remove();
-        // Set ListEntry object to null
-        this.listEntries[id] = null;
         // Remove ListEntry object from array
         this.listEntries.splice(id,1);
-        console.log(this);
         this.onListMutation();
     }
 
-    // Remove checked items from the list
-    clearList(){
-        this.listEntries.forEach((element) => {
-            if (element.checkbox.checked){
-                this.removeListEntry(element.id)
-            }
-        });
-        this.onListMutation();
-    }
-
-    // Move checked items to the bottom of the list.
-    sortList(){
+    // Remove all checked items from the list
+    clearList() {
         let indices = [];
+        console.log("size of listentries; " + this.listEntries.length);
+        console.log(this);
         this.listEntries.forEach((element, index) => {
             if (element.checked){
-                taskList.appendChild(element.li);
-                
-                console.log("ListEntry id: " + element.id + ",index: " + index);
-                // Add the index of the checked element to the indices array
-                indices.push(index);
-                console.log(indices);
+                // Set to null to mark for deletion 
+                this.listEntries[index] = null;
+                this.removeListEntries();
             }
         });
-        // Reorder ListEntries after loop finishes
+        console.log("Indices = " + indices);
+        this.onListMutation();
+    }
+
+    // Move all checked items to the bottom of the list.    
+    sortList() {
+        let indices = [];
+        this.listEntries.forEach((element, index) => {
+            if (element.checked) {
+                taskList.appendChild(element.li);
+                // Add the index of the checked element to the indices array
+                indices.push(index);
+            }
+        });
+        // Reorder listEntries after loop finishes
+        console.log(indices);
         indices.forEach((element) => {
             utils.moveToEndOfArray(this.listEntries, element);
-            //this.listEntries // move index to the bo
         });
+        console.log(this);
         this.onListMutation();
     }
 
@@ -128,13 +132,13 @@ class ListEntry{
      * @param {function} sortList     The the sortList() function of the TodoList parent
      * @param {function} onListMutation   The onListMutation() funciton of the TodoList parent
      * */
-    constructor(listEntryText, id, sortList, onListMutation) {
+    constructor(listEntryText, id, sortList, onListMutation, checked = false) {
         this.id = "li" + id;
         this.setEntryText(listEntryText);
         this.li = this.createListItem(this.id);
         this.checkbox = this.createCheckbox();
         this.span = this.createListTextSpan(this.getEntryText());
-        this.checked = false;
+        this.checked = checked;
         this.docFragment = this.createDocumentFragment();
         this.sortList = sortList;
         this.onListMutation = onListMutation;
@@ -150,7 +154,7 @@ class ListEntry{
 
     // Removes the span with the text, create text input
     editListItem(){
-        if(this.checkbox.checked){return;}
+        if(this.checked){return;}
         
         // Swap <span> for <input>
         this.listInput = this.createListInput(this.getEntryText());

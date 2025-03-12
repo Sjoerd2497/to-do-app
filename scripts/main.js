@@ -5,21 +5,14 @@ import * as utils from './utils.js';
 // - Look into decorator patterns for the TodoList and ListEntry classes
 // - Recreate this project in React once I learn it
 
-// 0. Create a class for a list.
-//      The class has...
-//      - A list item id counter (increases for each item created)
-//      - List items
-// 1. Create function for document fragment of a list item
-//      List item has...
-//      - Checkbox
-//      - Text
-//      - Edit button/link
-// 2. Create function to append list with fragment (create new list item)
-// 3. ...
 
-// Load list if there is one
-// Create list if there is none
+// If list-names is not empty:
+// 1 Load list names
+// 2 Place list names in sidebar
+// 3 Load the first list
 // 
+// If list-names is empty:
+// 1 Create new default list
 
 const myHeading = document.getElementById('dateText');
 const taskInput = document.getElementById('taskInput');

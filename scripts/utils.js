@@ -17,8 +17,8 @@ export function extractNumberFromString(text){
     return number;
 }
 
-export function moveToEndOfArray(array, index){
+export function moveToStartOfArray(array, index){
     if (index >= 0 && index < array.length){
-        array.push(array.splice(index,1)[0]);
+        array.unshift(array.splice(index,1)[0]);
     }
 }

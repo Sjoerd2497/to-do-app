@@ -14,15 +14,13 @@ import * as utils from './utils.js';
 // If list-names is empty:
 // 1 Create new default list
 
-const myHeading = document.getElementById('dateText');
+const dateHeading = document.getElementById('dateText');
 const taskInput = document.getElementById('taskInput');
 const addTaskButton = document.getElementById('addTaskButton');
 const clearButton = document.getElementById('clearButton');
-const taskList = document.getElementById('taskList');
-var itemId = 0;
 
 // Update heading with current date:
-myHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
+dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
 // Example: Mon, 30 Dec
 
 // Apply custom style to all external links [ChatGPT code]
@@ -34,8 +32,9 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
     }
 });
 
+// If 
 // Create a list class
-const myList = new todo.TodoList("mylist","taskList");
+const myList = new todo.TodoList("mylist","This is a description of a to-do list.","taskList","descriptionParagraph");
 
 // Add event listeners for the Add button and when 'Enter' is pressed:
 addTaskButton.addEventListener('click', (event) =>{

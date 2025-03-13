@@ -2,27 +2,34 @@ import * as utils from './utils.js';
 import * as storage from './storage.js';
 export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
 
-    name;               // Name of this list, for example: "My to-do list"
-    itemIdCounter;      // The id counter for the list items
-    listEntries;        // Array containing all items (objects of the ListEntry class)
-    taskList;           // The list object on the web page containing list items
+    title;                  // Name of this list, for example: "My to-do list"
+    description;
+    itemIdCounter;          // The id counter for the list items
+    listEntries;            // Array containing all items (objects of the ListEntry class)
+    taskList;               // The <ul> list object on the web page containing list items
+    descriptionParagraph;   // The <p> that holds the description
 
     /**
      * Create a new list.
-     * @param {string} name 
-     * @param {string} listId 
+     * @param {string} title 
+     * @param {string} description
+     * @param {string} listId   // The id of the <ul> on the page
+     * @param {string} paragraphId // The id of the <p> that holds the description
      */
-    constructor(name, listId) {
-        this.name = name;
+    constructor(title, description, listId, paragraphId) {
+        this.title = title;
+        this.description = description;
         this.taskList = document.getElementById(listId);
+        this.descriptionParagraph = document.getElementById(paragraphId);
+        this.descriptionParagraph.textContent = this.description;
         this.itemIdCounter = 0;
         this.listEntries = [];
-        console.log(this);
     }
 
     // Is called everytime the TodoList or a ListEntry is changed
     onListMutation() {
         storage.saveList(this);
+        console.log(this);
     }
 
     // Add an item to the list. 
@@ -30,20 +37,15 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
         itemText.trim();
         if (itemText) {
             const listEntry = new ListEntry(itemText, this.itemIdCounter, this.sortList.bind(this), this.onListMutation.bind(this));
-            this.taskList.prepend(listEntry.docFragment);
-            this.listEntries.unshift(listEntry); // Put in front of array
+            this.taskList.prepend(listEntry.docFragment); // Put in front of list (display newest item on top)
+            this.listEntries.push(listEntry); // Put in back of array
             this.itemIdCounter++;
         }
         this.onListMutation();
     }
 
     // Remove an item from the list
-    removeListEntries() {
-        this.listEntries.forEach((entry) => {
-            if (element === null){
-                
-            }
-        })
+    removeListEntry(id) {
         // Remove the <li> from the DOM
         this.listEntries[id].li.remove();
         // Remove ListEntry object from array
@@ -54,42 +56,40 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
     // Remove all checked items from the list
     clearList() {
         let indices = [];
-        console.log("size of listentries; " + this.listEntries.length);
-        console.log(this);
         this.listEntries.forEach((element, index) => {
             if (element.checked){
-                // Set to null to mark for deletion 
-                this.listEntries[index] = null;
-                this.removeListEntries();
+                // Add index to array of indices to-be-deleted
+                indices.push(index);
             }
         });
-        console.log("Indices = " + indices);
+        // Loop in reverse order to not mess up array index order with splice()
+        for (let i = indices.length-1; i >= 0; i--){
+            this.removeListEntry(indices[i]);
+        }
         this.onListMutation();
     }
 
     // Move all checked items to the bottom of the list.    
     sortList() {
-        let indices = [];
         this.listEntries.forEach((element, index) => {
             if (element.checked) {
                 taskList.appendChild(element.li);
                 // Add the index of the checked element to the indices array
-                indices.push(index);
+                utils.moveToStartOfArray(this.listEntries, index);
             }
         });
-        // Reorder listEntries after loop finishes
-        console.log(indices);
-        indices.forEach((element) => {
-            utils.moveToEndOfArray(this.listEntries, element);
-        });
-        console.log(this);
         this.onListMutation();
     }
 
     // Export only the necessary properties required to rebuild the list
-    // toJSON(){
-
-    // }
+    toJSON(){
+        return {
+            title: this.title, 
+            description: this.description,
+            itemIdCounter: this.itemIdCounter,
+            listEntries: this.listEntries,
+          }
+    }
 }
 
 
@@ -196,6 +196,15 @@ class ListEntry{
         }
         this.sortList();
         this.onListMutation(); // List is changed!
+    }
+
+    // Export only the necessary properties
+    toJSON(){
+        return {
+            entryText: this.entryText, 
+            id: this.id,
+            checked: this.checked,
+          }
     }
 
     // Creating the elements that are part of a ListEntry (<li>, <input checkbox>, <span> and <input>)

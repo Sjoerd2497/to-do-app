@@ -1,3 +1,4 @@
+import * as todo from './todo.js';
 // I will use LocalStorage for now
 // In the future I might look into IndexedDB as a fun exercise!
 
@@ -22,9 +23,16 @@ export function saveList(obj){
  * @param {string} listKey 
  * @returns {JSON} listJSON
  */
-export function loadList(listKey){
+export function loadList(listKey) {
     let listJSON = localStorage.getItem(listKey);
     return listJSON;
+}
+
+export function getSavedListNames() {
+    if (localStorage.getItem("list_names")) {
+        return JSON.parse(localStorage.getItem("list_names"));
+    }
+    return null;
 }
 
 /**
@@ -33,12 +41,17 @@ export function loadList(listKey){
  * @param {string} listId 
  * @param {string} paragraphId 
  */
-export function rebuildListFromJSON(listJSON, listId, paragraphId){
+export function rebuildListFromJSON(listJSON, listId, paragraphId) {
+    let parsedJSON = JSON.parse(listJSON);
     // create new TodoList().
+    let rebuiltList = new todo.TodoList(parsedJSON.title, parsedJSON.description, listId, paragraphId);
     // addListEntry() in order for each ListEntry
+    for (let i = 1; i < parsedJSON.listEntries.length-1; i++) {
+        rebuiltList.addListEntry(parsedJSON.listEntries[i].entryText, parsedJSON.listEntries[i].checked)
+    }
 }
 
-function storeListNames(listName){
+function storeListNames(listName) {
     let existsInMemory =  !!localStorage.getItem("list_names");
     let list_names = existsInMemory ? JSON.parse(localStorage.getItem("list_names")) : [];
     // Check if listName already exists in the list_names array:

@@ -1,5 +1,6 @@
 import * as todo from './todo.js';
 import * as utils from './utils.js';
+import * as storage from './storage.js';
 
 // Fun things to investigate in the future:
 // - Look into decorator patterns for the TodoList and ListEntry classes
@@ -19,6 +20,8 @@ const taskInput = document.getElementById('taskInput');
 const addTaskButton = document.getElementById('addTaskButton');
 const clearButton = document.getElementById('clearButton');
 
+var pageList;
+
 // Update heading with current date:
 dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
 // Example: Mon, 30 Dec
@@ -32,27 +35,25 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
     }
 });
 
-// If 
-// Create a list class
-const myList = new todo.TodoList("mylist","This is a description of a to-do list.","taskList","descriptionParagraph");
+// If there is a saved list
+if (storage.getSavedListNames()) {
+    let listName = storage.getSavedListNames()[0]; // Grab the first list name
+    let listJSON = storage.loadList(listName);
+    pageList = storage.rebuildListFromJSON(listJSON, "taskList", "descriptionParagraph");
+} else {
+    pageList = new todo.TodoList("mylist","This is a description of a to-do list.","taskList","descriptionParagraph");
+}
 
 // Add event listeners for the Add button and when 'Enter' is pressed:
 addTaskButton.addEventListener('click', (event) =>{
-    myList.addListEntry(taskInput.value);
+    pageList.addListEntry(taskInput.value);
     taskInput.value = '';
 });
 taskInput.addEventListener('keydown', (event) =>{
     // If the user presses the "Enter" key:
     if (event.key === "Enter"){
-        myList.addListEntry(taskInput.value);
+        pageList.addListEntry(taskInput.value);
         taskInput.value = ''; // Clear the input
     }
 });
-clearButton.addEventListener('click', myList.clearList.bind(myList));
-
-
-
-
-
-
-
+clearButton.addEventListener('click', pageList.clearList.bind(pageList));

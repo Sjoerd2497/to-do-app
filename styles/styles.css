@@ -203,21 +203,14 @@ The following classes are for the list items.
 .nav-item{
     color: #4f4f4f;
     font-size: 16px;
-    font-family: 'Helvetica Neue', sans-serif;
-    font-weight: 300;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0.5rem 0 0.5rem 0;
     padding: 8px 10px 8px 10px;
     border-radius: 0.5rem;
-}
-
-@supports(font-family: 'Segoe UI'){
-    .nav-item {
-        font-family: 'Segoe UI';
-        font-weight: 400;
-    }
 }
 
 .nav-item:hover{

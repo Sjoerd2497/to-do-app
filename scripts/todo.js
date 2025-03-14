@@ -11,8 +11,8 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
 
     /**
      * Create a new list.
-     * @param {string} title 
-     * @param {string} description
+     * @param {string} title // Title of the list
+     * @param {string} description // Description of the list
      * @param {string} listId   // The id of the <ul> on the page
      * @param {string} paragraphId // The id of the <p> that holds the description
      */
@@ -33,10 +33,10 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
     }
 
     // Add an item to the list. 
-    addListEntry(itemText) {
+    addListEntry(itemText, checked = false) {
         itemText.trim();
         if (itemText) {
-            const listEntry = new ListEntry(itemText, this.itemIdCounter, this.sortList.bind(this), this.onListMutation.bind(this));
+            const listEntry = new ListEntry(itemText, this.itemIdCounter, this.sortList.bind(this), this.onListMutation.bind(this), checked);
             this.taskList.prepend(listEntry.docFragment); // Put in front of list (display newest item on top)
             this.listEntries.push(listEntry); // Put in back of array
             this.itemIdCounter++;
@@ -103,7 +103,7 @@ class ListEntry{
 // Question: Would it be better to make everything private? Or everything public? Is using a get/set method for entryText a good choice?
 
     id;             // Identifier of this list item
-    entryText;     // The text of the list item
+    entryText;      // The text of the list item
     setEntryText(text){this.entryText = text;}
     getEntryText(){return this.entryText;}
     li;             // The <li> that is the parent, is a flex container

@@ -139,6 +139,12 @@ class ListEntry{
         this.checkbox = this.createCheckbox();
         this.span = this.createListTextSpan(this.getEntryText());
         this.checked = checked;
+        // If this new list item is already checked:
+        if (checked){
+            this.checkbox.checked = this.checked; // Check the checkbox
+            this.li.style.textDecoration = "line-through";
+            this.span.setAttribute("class", "list-text-checked"); // Change style to remove the hover styling
+        }
         this.docFragment = this.createDocumentFragment();
         this.sortList = sortList;
         this.onListMutation = onListMutation;

@@ -46,9 +46,10 @@ export function rebuildListFromJSON(listJSON, listId, paragraphId) {
     // create new TodoList().
     let rebuiltList = new todo.TodoList(parsedJSON.title, parsedJSON.description, listId, paragraphId);
     // addListEntry() in order for each ListEntry
-    for (let i = 1; i < parsedJSON.listEntries.length-1; i++) {
+    for (let i = 0; i <= parsedJSON.listEntries.length-1; i++) {
         rebuiltList.addListEntry(parsedJSON.listEntries[i].entryText, parsedJSON.listEntries[i].checked)
     }
+    return rebuiltList;
 }
 
 function storeListNames(listName) {

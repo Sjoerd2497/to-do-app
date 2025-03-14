@@ -20,7 +20,16 @@ const taskInput = document.getElementById('taskInput');
 const addTaskButton = document.getElementById('addTaskButton');
 const clearButton = document.getElementById('clearButton');
 
-var pageList;
+let pageList;
+
+// If there is a saved list
+if (storage.getSavedListNames()) {
+    let listName = storage.getSavedListNames()[0]; // Grab the first list name
+    let listJSON = storage.loadList(listName);
+    pageList = storage.rebuildListFromJSON(listJSON, "taskList", "descriptionParagraph");
+} else {
+    pageList = new todo.TodoList("mylist","This is a description of a to-do list.","taskList","descriptionParagraph");
+}
 
 // Update heading with current date:
 dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
@@ -34,15 +43,6 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
         link.setAttribute('rel', 'noopener noreferrer');
     }
 });
-
-// If there is a saved list
-if (storage.getSavedListNames()) {
-    let listName = storage.getSavedListNames()[0]; // Grab the first list name
-    let listJSON = storage.loadList(listName);
-    pageList = storage.rebuildListFromJSON(listJSON, "taskList", "descriptionParagraph");
-} else {
-    pageList = new todo.TodoList("mylist","This is a description of a to-do list.","taskList","descriptionParagraph");
-}
 
 // Add event listeners for the Add button and when 'Enter' is pressed:
 addTaskButton.addEventListener('click', (event) =>{

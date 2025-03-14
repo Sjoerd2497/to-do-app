@@ -8,13 +8,15 @@ I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 * Mark list entry as completed
 * Clear completed entries from list
 * Edit list entries
+* Save the list in storage
 
 ## 💡 Future improvements
 
-* Save the list in storage
+* Edit list description
+* Edit list title
 * Add sidebar button
 * Re-ordering lists by drag and drop
-* Create multiple lists
+* Add and save multiple lists
 
 ## 🖥️ Demo
 

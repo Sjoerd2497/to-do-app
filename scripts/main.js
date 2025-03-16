@@ -20,6 +20,7 @@ const taskInput = document.getElementById('taskInput');
 const addTaskButton = document.getElementById('addTaskButton');
 const clearButton = document.getElementById('clearButton');
 
+// The TodoList list that is displayed on the page
 let pageList;
 
 // If there is a saved list

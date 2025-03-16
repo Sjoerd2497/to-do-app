@@ -1,28 +1,29 @@
 @import 'reset.css';
 
-html{
+html {
     font-family: Inter, sans-serif;
+    font-weight: 300;
     font-size: 18px;
     background-color: white;
 }
 
-a{
+a {
     text-decoration: none;
 }
 
-a:link{
+a:link {
     color: #4f4f4f;
 }
 
-a:visited{
+a:visited {
     color: gray;
 }
 
-a:hover{
+a:hover {
     color: black;
 }
 
-::selection{
+::selection {
     background-color: #fff34d;
 }
 
@@ -40,7 +41,7 @@ a:hover{
     opacity: 0.8;
 } 
 
-button{
+button {
     font-size: 16px;
     height: 36px;
     width: 80px;
@@ -54,71 +55,110 @@ button{
     padding: 0;
 }
 
-h1{
+h1 {
     font-family: Inter, sans-serif;
     font-size: 50px;
     font-weight: 500;
     margin: 0;
 }
 
-h2{
+h2 {
     font-family: Inter, sans-serif;
     margin: 0;
 }
 
-img{
+h3 {
+    font-family: Inter, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+img {
     display: block;
     margin: 0 auto;
 }
-input{
+input {
     line-height: 2em;
     font-size: 16px;
 }
 
-input[type="text"]{
-    margin: 1rem 0 1em 0;
-    padding: 8px 1rem 8px 1rem;
-    flex: auto;
-    border-radius: 10px;
-    border: 1px solid #d8d8d8;
-    box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1),
-    0px 4px 12px 4px rgba(60, 64, 67, 0.05);
-}
-
-input[type="text"]:focus {
-    outline: none;
-    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
-    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
-}
-
-input[type="text"]:hover{
-    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
-    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
-}
-
-nav{
+nav {
     padding: 1.5rem 0 0 0;
 }
 
-.checkbox{
-    margin-right: 20px;
-}
 
-.input-container{
+.input-container {
     width: 100%;
     display: flex;
     justify-content: flex-start;
 }
 
-.list-item{
+.description:hover {
+    background-color: #f6f8fa;
+}
+
+
+/* 
+The following classes are for the list items.
+*/
+.list-item {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     color: black;
     font-size: 18px;
     gap: 0px;
     text-overflow: wrap;    
     margin: 20px 0px 20px 0;
+    width: 100%;
 }
+.checkbox {
+    margin-right: 14px;
+}
+.list-text {
+    flex-grow: 1;
+    display: block;
+    line-height: 2rem;
+    min-height: calc(2rem + 2px);
+    padding: 1px 2px 1px 8px;
+}
+.list-text:hover {
+    background-color: #f6f8fa;
+}
+.list-text-checked {
+    flex-grow: 1;
+    display: block;
+    line-height: 2rem;
+    min-height: calc(2rem + 2px);
+    padding: 1px 2px 1px 8px;
+}
+.edit-link {
+    color: black;
+    font-size: 12px;
+    margin: 0px 0 0px 10px;
+    text-decoration: underline;
+}
+.list-input {
+    border: 0;
+    font-size: 18px;
+    padding-left: 8px;
+    flex-grow: 1;
+}
+
+.list-input:focus {
+    background-color: #eeeeee;
+    outline: none;
+}
+
+.editinput {
+    line-height: 1.5em;
+    font-size: 18px;
+    margin: 0 !important;
+    padding: 4px 0 4px 0 !important;
+    border-radius: 4px !important;
+    border: 1px solid #d8d8d8;
+    box-shadow: unset !important;
+}
+
 
 .button-container{
     display: flex;
@@ -135,7 +175,7 @@ nav{
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: stretch;
 }
 
 @media (min-width: 768px){
@@ -143,6 +183,7 @@ nav{
         border: 1px;
         border-color: #d8d8d8;
         border-style: none none solid none;
+        align-items: baseline;
     }
 }
 
@@ -150,30 +191,30 @@ nav{
     .header-container{
         flex-direction: row;
         padding: 0 0 1.5rem 0;
+        align-items: baseline;
     }
 }
 
-.editinput{
-    line-height: 1.5em;
-    font-size: 18px;
-    margin: 0 !important;
-    padding: 4px 0 4px 0 !important;
-    border-radius: 4px !important;
-    border: 1px solid #d8d8d8;
-    box-shadow: unset !important;
+.main-title{
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding-right: 16px;
 }
 
-.editlink{
-    color: black;
-    font-size: 12px;
-    margin: 0px 0 0px 10px;
-    text-decoration: underline;
+#dateText {
+    text-wrap: nowrap;
+    flex-shrink: 0;
 }
 
 .nav-item{
     color: #4f4f4f;
     font-size: 16px;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -183,7 +224,7 @@ nav{
 }
 
 .nav-item:hover{
-    background-color: rgb(210, 210, 210);
+    background-color: #d2d2d2;
     
 }
 
@@ -228,9 +269,31 @@ nav{
     }
 }
 
+.todo-input{
+    margin: 1rem 0 1em 0;
+    padding: 8px 1rem 8px 1rem;
+    flex: auto;
+    border-radius: 10px;
+    border: 1px solid #d8d8d8;
+    box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1),
+    0px 4px 12px 4px rgba(60, 64, 67, 0.05);
+}
+
+.todo-input:focus{
+    outline: none;
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+}
+
+.todo-input:hover{
+    box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1),
+    0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+}
+
 .main-content{
     padding: 3rem 1.5rem 1.5rem 1.5rem;
     flex-grow: 1;
+    min-width: 0;
 }
 
 .main-content > *{
@@ -250,7 +313,6 @@ nav{
         max-width: 44rem;
     }
 }
-
 
 .main-content > *:nth-child(2){
     margin-top: 2rem;

@@ -24,20 +24,21 @@
           <h1 class="main-title">My to-do list</h1>
           <h2 id="dateText">Date</h2>
         </header>
-        <p>This is a description of my to-do list. It can contain info about the list and also may contain links. Link to my <a href="https://www.sjoerddejonge.nl">personal website</a>. <a href="https://www.google.com">Link to google.com</a> </p>
-        <p>Add an item to the list:</p>
+        <p id="descriptionParagraph" class="description">This is a description of my to-do list. It can contain info about the list and also may contain links. Link to my <a href="https://www.sjoerddejonge.nl">personal website</a>. <a href="https://www.google.com">Link to google.com</a> </p>
+        <h3>Add an item to the list:</h3>
         <div class="input-container">
-            <input id="taskInput" type="text" placeholder="Add a new task">
+            <input id="taskInput" class="todo-input" type="text" placeholder="Add a new task">
         </div>
-        <div class="button-container">
+      <div class="button-container">
           <button id="addTaskButton" size="50">Add</button>
           <button id="clearButton" size="50">Clear</button>
         </div>
         <div id="checkboxes">
-            <ul id="taskList"></ul>
+            <ul id="taskList">
+            </ul>
         </div>
       </div>
     </div>
-    <script src="scripts/main.js"></script>
+    <script type="module" src="scripts/main.js"></script> 
   </body>
 </html>

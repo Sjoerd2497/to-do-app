@@ -1,22 +1,27 @@
 import * as utils from './utils.js';
 import * as storage from './storage.js';
+
+
+
 export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
 
     title;                  // Name of this list, for example: "My to-do list"
-    description;
+    description;            // Description of the list
     itemIdCounter;          // The id counter for the list items
     listEntries;            // Array containing all items (objects of the ListEntry class)
     taskList;               // The <ul> list object on the web page containing list items
     descriptionParagraph;   // The <p> that holds the description
+    descriptionInput;       // Input field for editing description
 
     /**
      * Create a new list.
      * @param {string} title // Title of the list
      * @param {string} description // Description of the list
+     * @param {string} titleId  // The <h2>  that holds the title
      * @param {string} listId   // The id of the <ul> on the page
      * @param {string} paragraphId // The id of the <p> that holds the description
      */
-    constructor(title, description, listId, paragraphId) {
+    constructor(title, description, titleId, listId, paragraphId) {
         this.title = title;
         this.description = description;
         this.taskList = document.getElementById(listId);
@@ -26,7 +31,7 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
         this.listEntries = [];
     }
 
-    // Is called everytime the TodoList or a ListEntry is changed
+    // Is called everytime the TodoList or a child ListEntry is changed
     onListMutation() {
         storage.saveList(this);
         console.log(this);
@@ -79,6 +84,17 @@ export class TodoList { // Rename this class? 'CustomList', 'GenericList', ...?
             }
         });
         this.onListMutation();
+    }
+
+    // Edit the title of the list
+    editTitle() {
+        // code
+    }
+
+    // Edit the description of the list
+    editDescription() {
+        // code
+        this.descriptionParagraph;
     }
 
     // Export only the necessary properties required to rebuild the list
@@ -151,7 +167,7 @@ class ListEntry{
     }
 
     // Create a DocumentFragment containing the contents of 1 ListItem.  
-    createDocumentFragment(){
+    createDocumentFragment() {
         const listItemFragment = new DocumentFragment();
         this.li.append(this.checkbox, this.span);
         listItemFragment.append(this.li);
@@ -159,8 +175,8 @@ class ListEntry{
     }
 
     // Removes the span with the text, create text input
-    editListItem(){
-        if(this.checked){return;}
+    editListItem() {
+        if(this.checked){ return; }
         
         // Swap <span> for <input>
         this.listInput = this.createListInput(this.getEntryText());
@@ -179,7 +195,7 @@ class ListEntry{
         });
     }
 
-    saveListItem(){
+    saveListItem() {
         // Update the entryText
         this.setEntryText(this.listInput.value.trim());
         // Switch <input> for <span> and set its text:
@@ -189,7 +205,7 @@ class ListEntry{
         this.onListMutation(); // List is changed!       
     }
 
-    clickCheckbox(){
+    clickCheckbox() {
         if (this.checkbox.checked === true){
             this.checked = true;
             this.li.style.textDecoration = "line-through";
@@ -205,7 +221,7 @@ class ListEntry{
     }
 
     // Export only the necessary properties
-    toJSON(){
+    toJSON() {
         return {
             entryText: this.entryText, 
             id: this.id,
@@ -213,16 +229,19 @@ class ListEntry{
           }
     }
 
-    // Creating the elements that are part of a ListEntry (<li>, <input checkbox>, <span> and <input>)
 
-    createListItem(id){
+
+    // Functions for creating the elements that are part of a ListEntry 
+    // (<li>, <input type=checkbox>, <span> and <input>)
+
+    createListItem(id) {
         const li = document.createElement("li");
         li.setAttribute("class", "list-item");
         li.setAttribute("id", id);
         return li;
     }
 
-    createCheckbox(){
+    createCheckbox() {
         const checkbox = document.createElement("input");
         checkbox.setAttribute("class", "checkbox");
         checkbox.setAttribute("type", "checkbox");
@@ -230,7 +249,7 @@ class ListEntry{
         return checkbox;
     }
 
-    createListTextSpan(listItemText){
+    createListTextSpan(listItemText) {
         const span = document.createElement("span");
         span.setAttribute("class", "list-text");
         span.textContent = listItemText;
@@ -238,7 +257,7 @@ class ListEntry{
         return span;
     }
 
-    createListInput(textContent){
+    createListInput(textContent) {
         const input = document.createElement("input");
         input.setAttribute("class", "list-input");
         input.value = textContent;

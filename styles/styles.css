@@ -24,7 +24,7 @@ a:hover {
 }
 
 ::selection {
-    background-color: #fff34d;
+    background-color: #fef574;
 }
 
 .external-link::after {
@@ -86,6 +86,13 @@ nav {
     padding: 1.5rem 0 0 0;
 }
 
+.button-edit {
+    font-size: unset;
+    height: unset;
+    width: unset;
+    align-self: baseline;
+    margin-left: unset;
+}
 
 .input-container {
     width: 100%;

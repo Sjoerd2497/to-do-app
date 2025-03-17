@@ -1,4 +1,5 @@
 import * as todo from "./todo.js";
+import * as utils from "./utils.js";
 // I will use LocalStorage for now
 // In the future I might look into IndexedDB as a fun exercise!
 
@@ -23,7 +24,6 @@ export function saveList(obj) {
   localStorage.setItem(obj.title, listJSON); // The key is the list name
   // Store the name of the list
   storeListNames(obj.title);
-  console.log(listJSON);
 }
 
 /**
@@ -77,15 +77,16 @@ function storeListNames(listName) {
     : [];
   // Check if listName already exists in the list_names array:
   let listNameExists = false;
-  list_names.forEach((title) => {
+  list_names.forEach((title, index) => {
     if (listName == title) {
       listNameExists = true;
+      utils.moveToStartOfArray(list_names, index);
       // console.log("Already exists");
     }
   });
   // If not, add the list name to the array list_names:
   if (!listNameExists) {
-    list_names.push(listName);
+    list_names.unshift(listName);
   }
   localStorage.setItem("list_names", JSON.stringify(list_names));
 }

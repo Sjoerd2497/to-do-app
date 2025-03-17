@@ -7,10 +7,12 @@ import * as storage from "./storage.js";
 // - Recreate this project in React once I learn it
 
 const dateHeading = document.getElementById("dateText");
+const titleHeading = document.getElementById("listTitle");
 const taskInput = document.getElementById("taskInput");
 const addTaskButton = document.getElementById("addTaskButton");
 const clearButton = document.getElementById("clearButton");
 const descriptionParagraph = document.getElementById("descriptionParagraph");
+const editButton = document.getElementById("editButton");
 
 // The TodoList list that is displayed on the page
 let pageList;
@@ -27,7 +29,7 @@ if (storage.getSavedListNames()) {
   );
 } else {
   pageList = new todo.TodoList(
-    "mylist",
+    "My to-do list",
     "A to-do list can contain a description. The description can be used to explain what the list is about. It is placed in an editable <div> element, so you can just click here to start editing! The description is automatically saved for every character you enter.",
     "listTitle",
     "taskList",
@@ -39,7 +41,11 @@ if (storage.getSavedListNames()) {
 dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
 // Example: Mon, 30 Dec
 
-// Add event listeners:
+/**
+ *
+ *  Add event listeners:
+ *
+ */
 addTaskButton.addEventListener("click", (event) => {
   pageList.addListEntry(taskInput.value);
   taskInput.value = "";
@@ -54,7 +60,7 @@ taskInput.addEventListener("keydown", (event) => {
 clearButton.addEventListener("click", pageList.clearList.bind(pageList));
 // Save list description either on every keypress or focusout:
 descriptionParagraph.addEventListener("keydown", (event) => {
-  // If the user presses the Shift + Enter:
+  // If the user presses Shift + Enter:
   if (event.key === "Enter" && event.shiftKey) {
     descriptionParagraph.blur();
   }
@@ -63,7 +69,25 @@ descriptionParagraph.addEventListener("keydown", (event) => {
 descriptionParagraph.addEventListener("focusout", (event) => {
   pageList.editDescription();
 });
-
+editButton.addEventListener("click", (event) => {
+  pageList.editTitle();
+  const selectionRange = document.createRange();
+  selectionRange.selectNode(titleHeading);
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  titleHeading.focus();
+  selection.addRange(selectionRange);
+  editButton.setAttribute("style", "display: none;");
+});
+titleHeading.addEventListener("keydown", (event) => {
+  // If the user presses Enter:
+  if (event.key === "Enter") {
+    titleHeading.blur();
+  }
+});
+titleHeading.addEventListener("focusout", (event) => {
+  pageList.setTitle();
+});
 // Apply custom style to all external links [ChatGPT code]
 document.querySelectorAll('a[href^="http"]').forEach((link) => {
   if (!link.href.includes(location.hostname)) {

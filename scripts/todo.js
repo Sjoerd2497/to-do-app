@@ -11,12 +11,13 @@ export class TodoList {
   taskList; // The <ul> list object on the web page containing list items
   descriptionParagraph; // The <p> that holds the description
   descriptionInput; // Input field for editing description
+  titleHeading; // <h1> that holds the title
 
   /**
    * Create a new list.
    * @param {string} title // Title of the list
    * @param {string} description // Description of the list
-   * @param {string} titleId  // The <h2>  that holds the title
+   * @param {string} titleId  // The id of <h1> that holds the title
    * @param {string} listId   // The id of the <ul> on the page
    * @param {string} paragraphId // The id of the <p> that holds the description
    */
@@ -25,6 +26,8 @@ export class TodoList {
     this.description = description;
     this.taskList = document.getElementById(listId);
     this.descriptionParagraph = document.getElementById(paragraphId);
+    this.titleHeading = document.getElementById(titleId);
+    this.titleHeading.textContent = this.title;
     this.descriptionParagraph.textContent = this.description;
     this.itemIdCounter = 0;
     this.listEntries = [];
@@ -94,6 +97,15 @@ export class TodoList {
   // Edit the title of the list
   editTitle() {
     // code
+    this.titleHeading.setAttribute("contenteditable", true);
+
+    console.log("yippee");
+  }
+
+  setTitle() {
+    this.titleHeading.setAttribute("contenteditable", false);
+    this.title = this.titleHeading.textContent;
+    this.onListMutation();
   }
 
   // Edit the description of the list

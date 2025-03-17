@@ -109,6 +109,8 @@ nav {
   resize: block;
   outline: none;
   border: none;
+  line-height: 1.8rem;
+  margin-bottom: 1.8rem;
 }
 
 .description:hover {

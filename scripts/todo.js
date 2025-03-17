@@ -99,7 +99,8 @@ export class TodoList {
   // Edit the description of the list
   editDescription() {
     // code
-    this.descriptionParagraph;
+    this.description = this.descriptionParagraph.textContent;
+    this.onListMutation();
   }
 
   // Export only the necessary properties required to rebuild the list

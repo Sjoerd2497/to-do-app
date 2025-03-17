@@ -100,8 +100,23 @@ nav {
   justify-content: flex-start;
 }
 
+.description {
+  font-family: inherit;
+  font-size: inherit;
+  display: block;
+  width: 100%;
+  height: fit-content;
+  resize: block;
+  outline: none;
+  border: none;
+}
+
 .description:hover {
   background-color: #f6f8fa;
+}
+
+.description:focus {
+  background-color: #eeeeee;
 }
 
 /* 

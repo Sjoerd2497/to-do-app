@@ -28,7 +28,7 @@ if (storage.getSavedListNames()) {
 } else {
   pageList = new todo.TodoList(
     "mylist",
-    "This is a description of a to-do list.",
+    "A to-do list can contain a description. The description can be used to explain what the list is about. It is placed in an editable <div> element, so you can just click here to start editing! The description is automatically saved for every character you enter.",
     "listTitle",
     "taskList",
     "descriptionParagraph"
@@ -52,10 +52,17 @@ taskInput.addEventListener("keydown", (event) => {
   }
 });
 clearButton.addEventListener("click", pageList.clearList.bind(pageList));
-descriptionParagraph.addEventListener(
-  "click",
-  pageList.editDescription.bind(pageList)
-);
+// Save list description either on every keypress or focusout:
+descriptionParagraph.addEventListener("keydown", (event) => {
+  // If the user presses the Shift + Enter:
+  if (event.key === "Enter" && event.shiftKey) {
+    descriptionParagraph.blur();
+  }
+  pageList.editDescription();
+});
+descriptionParagraph.addEventListener("focusout", (event) => {
+  pageList.editDescription();
+});
 
 // Apply custom style to all external links [ChatGPT code]
 document.querySelectorAll('a[href^="http"]').forEach((link) => {

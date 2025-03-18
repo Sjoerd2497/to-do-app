@@ -53,6 +53,7 @@ export function getSavedListNames() {
 export function rebuildListFromJSON(listJSON, titleId, listId, paragraphId) {
   let parsedJSON = JSON.parse(listJSON);
   // create new TodoList().
+  console.log(parsedJSON);
   let rebuiltList = new todo.TodoList(
     parsedJSON.title,
     parsedJSON.description,
@@ -68,6 +69,22 @@ export function rebuildListFromJSON(listJSON, titleId, listId, paragraphId) {
     );
   }
   return rebuiltList;
+}
+
+export function listNameExists(listName) {
+  let listNameExists = false;
+  let existsInMemory = !!localStorage.getItem("list_names");
+  if (!existsInMemory) return listNameExists;
+  
+  let list_names = JSON.parse(localStorage.getItem("list_names"));
+  // Check if listName already exists in the list_names array:
+  list_names.forEach((title) => {
+    if (listName == title) {
+      listNameExists = true;
+      return listNameExists;
+    }
+  });
+  return listNameExists;
 }
 
 function storeListNames(listName) {

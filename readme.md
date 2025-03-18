@@ -30,7 +30,8 @@ I will add a live demo later!
 |-- index.html      # Main HTML file
 |-- README.md       # Read me
 |-- scripts/
-|   |-- main.js     # Initilizes app, event listeners
+|   |-- main.js     # Initilizes app, event listeners, link list to DOM
+|   |-- navbar.js   # Builds the navigation sidebar
 |   |-- todo.js     # Todo list functionality
 |   |-- storage.js  # Manages storage
 |   |-- utils.js    # Utility functions
@@ -38,6 +39,12 @@ I will add a live demo later!
 |   |-- reset.css   # CSS reset
 |   |-- styles.css  # Stylesheet
 ```
+### Project classes
+There are *two* classes in `todo.js`, TodoList and ListEntry. An instance of
+the TodoList class represents a list. Each TodoList instance can have multiple
+ListEntry instances, which represent list items. A TodoList instance keeps an
+array of all ListEntry instances. Therefore when a TodoList instance is saved
+as a JSON in localStorage, it automatically includes the list items.
 
 ## 📜 License
 

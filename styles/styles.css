@@ -255,7 +255,7 @@ The following classes are for the list items.
   text-wrap: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-right: 18px;
+  margin-right: 18px;
   outline: none;
 }
 

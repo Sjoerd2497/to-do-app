@@ -36,7 +36,13 @@ export class TodoList {
   // Is called everytime the TodoList or a child ListEntry is changed
   onListMutation(titleChanged = false) {
     if (titleChanged) {
-      // code
+      if (storage.listNameExists(this.titleHeading.textContent)) {
+        if (confirm(`A list with the name "${this.titleHeading.textContent}" already exists. Do you want to overwrite this?`)) {
+          storage.saveList(this);
+        } else {
+          return;
+        }
+      }
     }
 
     storage.saveList(this);
@@ -102,14 +108,12 @@ export class TodoList {
   editTitle() {
     // code
     this.titleHeading.setAttribute("contenteditable", true);
-
-    console.log("yippee");
   }
 
   setTitle() {
     this.titleHeading.setAttribute("contenteditable", false);
     this.title = this.titleHeading.textContent;
-    this.onListMutation();
+    this.onListMutation(true);
   }
 
   // Edit the description of the list

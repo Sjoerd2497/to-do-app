@@ -27,7 +27,7 @@ const descriptionParagraph = document.getElementById(descriptionParagraphId);
 const editButton = document.getElementById(editButtonId);
 const newListButton = document.getElementById(newListButtonId);
 const navElement = document.getElementById(navBarId);
-let navBar = new navbar.NavBar(navElement);       // Creates the navbar
+let navBar = new navbar.NavBar(navElement); // Creates the navbar
 
 // The TodoList list that is displayed on the page
 let pageList;
@@ -90,7 +90,7 @@ if (storage.getSavedListNames()) {
   navBar.buildNavBar();
 }
 
-/** 
+/**
  * 2. Update date heading with current date:
  */
 dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
@@ -108,10 +108,12 @@ taskInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     pageList.addListEntry(taskInput.value);
     taskInput.value = ""; // Clear the input
+    onPageChange();
   }
 });
 clearButton.addEventListener("click", (event) => {
   getPageList().clearList();
+  onPageChange();
 });
 // Save list description either on every keypress or focusout:
 descriptionParagraph.addEventListener("keydown", (event) => {
@@ -120,9 +122,11 @@ descriptionParagraph.addEventListener("keydown", (event) => {
     descriptionParagraph.blur();
   }
   pageList.editDescription();
+  onPageChange();
 });
 descriptionParagraph.addEventListener("focusout", (event) => {
   pageList.editDescription();
+  onPageChange();
 });
 editButton.addEventListener("click", (event) => {
   pageList.editTitle();
@@ -151,7 +155,7 @@ newListButton.addEventListener("click", () => {
   let newListName = nameTemplate;
   let i = 1;
   // Check if name is available
-  while(storage.listNameExists(newListName)) {
+  while (storage.listNameExists(newListName)) {
     let appendix = ` (${i})`;
     newListName = nameTemplate + appendix;
     i++;
@@ -170,7 +174,7 @@ newListButton.addEventListener("click", () => {
 
 /**
  * 4. Apply custom style to all external links [ChatGPT code]
- */ 
+ */
 document.querySelectorAll('a[href^="http"]').forEach((link) => {
   if (!link.href.includes(location.hostname)) {
     link.classList.add("external-link");
@@ -178,4 +182,3 @@ document.querySelectorAll('a[href^="http"]').forEach((link) => {
     link.setAttribute("rel", "noopener noreferrer");
   }
 });
-

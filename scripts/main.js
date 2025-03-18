@@ -71,11 +71,11 @@ descriptionParagraph.addEventListener("focusout", (event) => {
 });
 editButton.addEventListener("click", (event) => {
   pageList.editTitle();
+  titleHeading.focus();
   const selectionRange = document.createRange();
-  selectionRange.selectNode(titleHeading);
+  selectionRange.selectNodeContents(titleHeading);
   const selection = window.getSelection();
   selection.removeAllRanges();
-  titleHeading.focus();
   selection.addRange(selectionRange);
   editButton.setAttribute("style", "display: none;");
 });

@@ -88,9 +88,12 @@ input {
   font-size: 16px;
 }
 
+.space-between {
+  justify-content: space-between;
+}
+
 .flex-row-container {
   display: flex;
-  justify-content: left;
   flex: 1 1 auto;
   min-width: 0;
   align-items: center;

@@ -21,7 +21,7 @@ I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 
 ## 🖥️ Demo
 
-I will add a live demo later!
+[Preview the app here!](https://sjoerd2497.github.io/to-do-app/)
 
 ## 📂 Project structure
 
@@ -42,7 +42,7 @@ I will add a live demo later!
 
 ### Project classes
 
-There are _two_ classes in `todo.js`, TodoList and ListEntry. An instance of
+There are **two** classes in `todo.js`, TodoList and ListEntry. An instance of
 the TodoList class represents a list. Each TodoList instance can have multiple
 ListEntry instances, which represent list items. A TodoList instance keeps an
 array of all ListEntry instances. Therefore when a TodoList instance is saved

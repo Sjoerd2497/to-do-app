@@ -9,14 +9,14 @@ I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 - Clear completed entries from list
 - Edit list entries
 - Save the list in storage
+- Edit list description
+- Edit list title
+- Add and save multiple lists
 
 ## 💡 Future improvements
 
-- Edit list description
-- Edit list title
 - Add sidebar button
 - Re-ordering lists by drag and drop
-- Add and save multiple lists
 - Add night mode
 
 ## 🖥️ Demo
@@ -39,8 +39,10 @@ I will add a live demo later!
 |   |-- reset.css   # CSS reset
 |   |-- styles.css  # Stylesheet
 ```
+
 ### Project classes
-There are *two* classes in `todo.js`, TodoList and ListEntry. An instance of
+
+There are _two_ classes in `todo.js`, TodoList and ListEntry. An instance of
 the TodoList class represents a list. Each TodoList instance can have multiple
 ListEntry instances, which represent list items. A TodoList instance keeps an
 array of all ListEntry instances. Therefore when a TodoList instance is saved

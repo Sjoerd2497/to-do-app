@@ -98,6 +98,7 @@ input {
 
 .button-new-list {
   border: none;
+  background-color: unset;
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   display: flex;
   width: auto;
@@ -107,6 +108,10 @@ input {
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
+}
+
+.button-new-list:hover {
+  background-color: #e9e9ed;
 }
 
 .button-delete-list {

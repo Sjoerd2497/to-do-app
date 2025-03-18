@@ -43,9 +43,10 @@ class NavItem {
   navTitle; // The list title displayed in this NavItem
   navLink; // The <a></a> link to open/load the list
   divElement;
+  spanElement;
   deleteButton;
   docFragment; // The DocumentFragment holding all elements:
-  // <a class="nav-link" href="#"><div class="nav-item">[List title]<button class="button-delete-list"></button></div></a>
+  // <a class="nav-link" href="#"><div class="nav-item"><span class="overflow">[List title]</span><button class="button-delete-list"></button></div></a>
 
   constructor(listTitle) {
     this.navTitle = listTitle;
@@ -53,13 +54,15 @@ class NavItem {
     // main.getPageList();
     this.navLink = this.createLinkElement(this.navTitle);
     this.divElement = this.createDivElement();
+    this.spanElement = this.createSpanElement();
     this.deleteButton = this.createDeleteButton();
     this.docFragment = this.createDocumentFragment();
   }
 
   createDocumentFragment() {
     const navItemFragment = new DocumentFragment();
-    this.divElement.append(this.navTitle, this.deleteButton);
+    this.spanElement.append(this.navTitle);
+    this.divElement.append(this.spanElement, this.deleteButton);
     this.navLink.append(this.divElement);
     navItemFragment.append(this.navLink);
     return navItemFragment;
@@ -84,6 +87,12 @@ class NavItem {
     const div = document.createElement("div");
     div.setAttribute("class", "nav-item");
     return div;
+  }
+
+  createSpanElement() {
+    const span = document.createElement("span");
+    span.setAttribute("class", "overflow");
+    return span;
   }
 
   createDeleteButton() {

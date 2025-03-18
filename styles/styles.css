@@ -120,6 +120,7 @@ input {
 .button-delete-list {
   width: 24px;
   margin-top: 1px;
+  flex-shrink: 0;
   display: none;
   background-color: unset;
   opacity: 0.7;
@@ -334,9 +335,7 @@ The following classes are for the list items.
   display: flex;
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   font-weight: 400;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   margin: 0.5rem 0 0.5rem 0;
   padding: 8px 10px 8px 10px;
   border-radius: 0.5rem;
@@ -350,6 +349,12 @@ The following classes are for the list items.
 
 .nav-item:active {
   background-color: #d2d2d2 !important;
+}
+
+.overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-link {

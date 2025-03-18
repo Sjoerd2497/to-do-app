@@ -13,10 +13,33 @@
   </head>
   <body>
     <div class="sidebar">
-      <header class="flex-row-container">
-        <h2 class="nav-title">My lists</h2><button id="newListButton">New list</button>
+      <header class="flex-row-container sidebar-padding bottom-padding">
+        <h2 class="nav-title">My lists</h2>
+        <button class="button-new-list" id="newListButton">
+          New list
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: none;
+                  stroke: #757575;
+                  stroke-miterlimit: 10;
+                  stroke-width: 2;
+                }
+              </style>
+            </defs>
+            <g id="Layer_1-2" data-name="Layer 1" transform="translate(2,1)">
+              <path d="M12 6v12M18 12H6" class="cls-1" />
+            </g>
+          </svg>
+        </button>
       </header>
-      <nav id="navBar">
+      <nav id="navBar" class="navbar sidebar-padding bottom-padding">
         <!-- <a class="nav-link" href="#"><div class="nav-item">My to-do list</div></a>
         <a class="nav-link" href="#"><div class="nav-item">Groceries</div></a>
         <a class="nav-link" href="#"><div class="nav-item">This list has an enormously long title</div></a> -->

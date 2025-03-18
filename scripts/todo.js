@@ -38,8 +38,15 @@ export class TodoList {
     // Extra logic is needed when the title changed:
     if (titleChanged) {
       // If the new list name already exists:
-      if (storage.listNameExists(this.titleHeading.textContent) && this.title != this.titleHeading.textContent) {
-        if (confirm(`A list with the name "${this.titleHeading.textContent}" already exists. Do you want to overwrite this?`)) {
+      if (
+        storage.listNameExists(this.titleHeading.textContent) &&
+        this.title != this.titleHeading.textContent
+      ) {
+        if (
+          confirm(
+            `A list with the name "${this.titleHeading.textContent}" already exists. Do you want to overwrite this?`
+          )
+        ) {
           let oldTitle = this.title;
           this.title = this.titleHeading.textContent;
           storage.saveListWithChangedTitle(this, oldTitle, this.title);
@@ -122,6 +129,7 @@ export class TodoList {
 
   setTitle() {
     this.titleHeading.setAttribute("contenteditable", false);
+    this.titleHeading.scrollLeft = 0;
     this.onListMutation(true);
   }
 

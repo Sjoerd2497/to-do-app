@@ -26,6 +26,7 @@ a:hover {
 body {
   display: flex;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 ::selection {
@@ -87,15 +88,49 @@ input {
   font-size: 16px;
 }
 
-nav {
-  padding: 1.5rem 0 0 0;
-}
-
 .flex-row-container {
   display: flex;
   justify-content: left;
   flex: 1 1 auto;
   min-width: 0;
+  align-items: center;
+}
+
+.button-new-list {
+  border: none;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+  display: flex;
+  width: auto;
+  color: #4f4f4f;
+  border-radius: 0.5rem;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+}
+
+.button-delete-list {
+  width: 24px;
+  margin-top: 1px;
+  display: none;
+  background-color: unset;
+  opacity: 0.7;
+  height: 24px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20data-name%3D%22Layer%202%22%20viewBox%3D%220%200%2021.13%2024.95%22%3E%3Cg%20transform%3D%22scale(0.7)%20translate(4%2C5)%22%3E%3Cpath%20d%3D%22M.95%204.12h19.24%22%20style%3D%22fill%3A%23444%3Bstroke%3A%23444%3Bstroke-linecap%3Around%3Bstroke-miterlimit%3A10%3Bstroke-width%3A1.89px%22/%3E%3Cpath%20d%3D%22M6.05%204.12%207.46.95h6.25l1.37%203.17%22%20style%3D%22stroke%3A%23444%3Bstroke-linecap%3Around%3Bstroke-miterlimit%3A10%3Bstroke-width%3A1.89px%3Bfill%3Anone%22/%3E%3Cpath%20d%3D%22M19.2%206.88H1.93c-.29%200-.51.3-.45.62l1.95%2016.85c.06.35.34.6.66.6h12.96c.32%200%20.59-.25.66-.6L19.66%207.5c.06-.32-.16-.62-.45-.62ZM7.14%2022.42a.7.7%200%200%201-.75-.63L5.37%2010.16A.7.7%200%200%201%206%209.41a.7.7%200%200%201%20.75.63l1.02%2011.63a.7.7%200%200%201-.63.75Zm4.12-.67c0%20.38-.31.69-.69.69-.38%200-.69-.31-.69-.69V10.08c0-.38.31-.69.69-.69.38%200%20.69.31.69.69v11.67Zm3.49-.02c-.03.38-.37.66-.75.63a.694.694%200%200%201-.63-.75l1.02-11.63c.03-.38.37-.66.75-.63.38.03.66.37.63.75l-1.02%2011.63Z%22%20style%3D%22stroke-width%3A0%3Bfill%3A%23444%22/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.button-delete-list:hover {
+  background-color: #bebebe;
+  opacity: 1;
+}
+
+div:hover > .button-delete-list {
+  display: block;
 }
 
 .button-edit {
@@ -117,7 +152,7 @@ div:hover > .button-edit {
 }
 
 .button-edit:hover {
-  background-color: #f6f8fa;
+  background-color: #e9e9ed;
 }
 
 .pencil-icon {
@@ -268,9 +303,27 @@ The following classes are for the list items.
   flex-shrink: 0 0 auto;
 }
 
+.sidebar-padding {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+}
+
+.bottom-padding {
+  padding-bottom: 1.5rem;
+}
+
+.navbar {
+  height: 95%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-color: #e1e0e0 #ffffff00;
+}
+
 .nav-item {
   color: #4f4f4f;
   font-size: 16px;
+  height: 41px;
+  display: flex;
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   font-weight: 400;
   white-space: nowrap;
@@ -279,10 +332,12 @@ The following classes are for the list items.
   margin: 0.5rem 0 0.5rem 0;
   padding: 8px 10px 8px 10px;
   border-radius: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .nav-item:hover {
-  background-color: #e1e0e0 !important;
+  background-color: #d0d0d7 !important;
 }
 
 .nav-item:active {
@@ -303,13 +358,15 @@ The following classes are for the list items.
   bottom: 0;
   top: 0;
   background-color: #f6f8fa;
+  height: 100vh;
   border: 0.5px;
   border-color: #d8d8d8;
   border-style: none solid none none;
-  padding: 3rem 1.5rem 0 1.5rem;
+  padding: 3rem 0 0 0;
   width: 280px;
   flex-shrink: 0;
   transition: left 400ms;
+  overflow: hidden;
 }
 
 .sidebar:active {

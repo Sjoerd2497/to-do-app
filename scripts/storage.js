@@ -41,6 +41,14 @@ export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
   console.log(list_names);
 }
 
+export function deleteList(listName) {
+  let list_names = JSON.parse(localStorage.getItem("list_names"));
+  const index = list_names.indexOf(listName);
+  list_names.splice(index, 1);
+  localStorage.setItem("list_names", JSON.stringify(list_names));
+  localStorage.removeItem(listName);
+}
+
 /**
  * Load list from localStorage
  * @param {string} listKey
@@ -91,7 +99,7 @@ export function listNameExists(listName) {
   let listNameExists = false;
   let existsInMemory = !!localStorage.getItem("list_names");
   if (!existsInMemory) return listNameExists;
-  
+
   let list_names = JSON.parse(localStorage.getItem("list_names"));
   // Check if listName already exists in the list_names array:
   list_names.forEach((title) => {

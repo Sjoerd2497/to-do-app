@@ -28,6 +28,13 @@ const editButton = document.getElementById(editButtonId);
 const newListButton = document.getElementById(newListButtonId);
 const navElement = document.getElementById(navBarId);
 let navBar = new navbar.NavBar(navElement); // Creates the navbar
+const defaultList = new todo.TodoList(
+  "My first to-do list",
+  "This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
+  listTitleId,
+  taskListId,
+  descriptionParagraphId
+);
 
 // The TodoList list that is displayed on the page
 let pageList;
@@ -36,7 +43,13 @@ let pageList;
 export function getPageList() {
   return pageList;
 }
-window.getPageList = getPageList;
+// window.getPageList = getPageList; // Make getPageList() available to browser console
+
+export function setDefaultPageList() {
+  pageList = defaultList;
+  pageList.onListMutation();
+  onPageChange();
+}
 
 // Function to display a list as the current pageList
 export function displayList(listName) {
@@ -48,6 +61,7 @@ export function displayList(listName) {
 
   // Load list
   let listJSON = storage.loadList(listName);
+  console.log(listName);
   pageList = storage.rebuildListFromJSON(
     listJSON,
     listTitleId,
@@ -79,15 +93,7 @@ if (storage.getSavedListNames()) {
   let listName = storage.getSavedListNames()[0]; // Grab the first list name
   displayList(listName);
 } else {
-  pageList = new todo.TodoList(
-    "My to-do list",
-    "A to-do list can contain a description. The description can be used to explain what the list is about. It is placed in an editable <div> element, so you can just click here to start editing! The description is automatically saved for every character you enter.",
-    listTitleId,
-    taskListId,
-    descriptionParagraphId
-  );
-  pageList.onListMutation();
-  navBar.buildNavBar();
+  setDefaultPageList();
 }
 
 /**

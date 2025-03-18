@@ -87,6 +87,7 @@ titleHeading.addEventListener("keydown", (event) => {
 });
 titleHeading.addEventListener("focusout", (event) => {
   pageList.setTitle();
+  editButton.removeAttribute("style", "display: none;");
 });
 // Apply custom style to all external links [ChatGPT code]
 document.querySelectorAll('a[href^="http"]').forEach((link) => {

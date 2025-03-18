@@ -259,6 +259,10 @@ The following classes are for the list items.
   outline: none;
 }
 
+.main-title:focus {
+  background-color: #eeeeee;
+}
+
 #dateText {
   text-wrap: nowrap;
   flex-shrink: 0 0 auto;

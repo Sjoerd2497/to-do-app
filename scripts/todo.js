@@ -34,7 +34,11 @@ export class TodoList {
   }
 
   // Is called everytime the TodoList or a child ListEntry is changed
-  onListMutation() {
+  onListMutation(titleChanged = false) {
+    if (titleChanged) {
+      // code
+    }
+
     storage.saveList(this);
     console.log(this);
   }

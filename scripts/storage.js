@@ -20,10 +20,25 @@ import * as utils from "./utils.js";
  */
 export function saveList(obj) {
   const listJSON = JSON.stringify(obj);
-  // Add a check for list name duplicates?
   localStorage.setItem(obj.title, listJSON); // The key is the list name
   // Store the name of the list
   storeListNames(obj.title);
+}
+
+export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
+  const listJSON = JSON.stringify(obj);
+  // Remove oldTitle from list_names
+  let list_names = JSON.parse(localStorage.getItem("list_names"));
+  const index = list_names.indexOf(oldTitle);
+  list_names.splice(index, 1);
+  localStorage.setItem("list_names", JSON.stringify(list_names));
+  // Remove the old list from localStorage:
+  localStorage.removeItem(oldTitle);
+  // Save the list:
+  localStorage.setItem(newTitle, listJSON);
+  // Store the name of the list
+  storeListNames(newTitle);
+  console.log(list_names);
 }
 
 /**
@@ -65,7 +80,8 @@ export function rebuildListFromJSON(listJSON, titleId, listId, paragraphId) {
   for (let i = 0; i <= parsedJSON.listEntries.length - 1; i++) {
     rebuiltList.addListEntry(
       parsedJSON.listEntries[i].entryText,
-      parsedJSON.listEntries[i].checked
+      parsedJSON.listEntries[i].checked,
+      false
     );
   }
   return rebuiltList;

@@ -7,12 +7,13 @@ export class NavBar {
   navElement;     // The <nav> item on the page
   navItems;
 
-  constructor(navElement){
+  constructor(navElement) {
     this.navElement = navElement;
+    this.navItems = [];
     this.buildNavBar();
   }
 
-  buildNavBar(){
+  buildNavBar() {
     // Clear current navbar if it has items
     while (this.navElement.firstChild) {
       this.navElement.removeChild(this.navElement.lastChild);
@@ -22,7 +23,18 @@ export class NavBar {
     if (!list_names) return;
     list_names.forEach( (listName) => {
       let navItem = new NavItem(listName);
-      this.navElement.append(navItem.docFragment);
+      this.navItems.push(navItem);  // Put the NavItem in the array
+      this.navElement.append(navItem.docFragment); // Place it in the sidebar
+    });
+  }
+
+  setActiveNavItem(title) {
+    this.navItems.forEach( (item) => {
+      if (item.navTitle == title) {
+        item.divElement.setAttribute("style", "background-color:rgb(230, 230, 230);");
+      } else {
+        item.divElement.setAttribute("style", "background-color: unset;");
+      }
     });
   }
 }

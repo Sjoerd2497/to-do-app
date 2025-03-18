@@ -10,26 +10,33 @@ import * as navbar from "./navbar.js";
 const listTitleId = "listTitle";
 const taskListId = "taskList";
 const navBarId = "navBar";
+const dateTextId = "dateText";
+const taskInputId = "taskInput";
+const addTaskButtonId = "addTaskButton";
+const clearButtonId = "clearButton";
+const descriptionParagraphId = "descriptionParagraph";
+const editButtonId = "editButton";
+const newListButtonId = "newListButton";
 
-const dateHeading = document.getElementById("dateText");
+const dateHeading = document.getElementById(dateTextId);
 const titleHeading = document.getElementById(listTitleId);
-const taskInput = document.getElementById("taskInput");
-const addTaskButton = document.getElementById("addTaskButton");
-const clearButton = document.getElementById("clearButton");
-const descriptionParagraph = document.getElementById("descriptionParagraph");
-const editButton = document.getElementById("editButton");
+const taskInput = document.getElementById(taskInputId);
+const addTaskButton = document.getElementById(addTaskButtonId);
+const clearButton = document.getElementById(clearButtonId);
+const descriptionParagraph = document.getElementById(descriptionParagraphId);
+const editButton = document.getElementById(editButtonId);
+const newListButton = document.getElementById(newListButtonId);
 const navElement = document.getElementById(navBarId);
 let navBar = new navbar.NavBar(navElement);       // Creates the navbar
-
-
 
 // The TodoList list that is displayed on the page
 let pageList;
 
 // Function for other scripts/classes to get the current pageList
-export function getPageList(){
+export function getPageList() {
   return pageList;
 }
+window.getPageList = getPageList;
 
 // Function to display a list as the current pageList
 export function displayList(listName) {
@@ -45,11 +52,17 @@ export function displayList(listName) {
     listJSON,
     listTitleId,
     taskListId,
-    "descriptionParagraph"
+    descriptionParagraphId
   );
+  onPageChange();
+}
 
+function onPageChange() {
   // Rebuild navbar
   navBar.buildNavBar();
+
+  // Set current list as highlighted in navbar
+  navBar.setActiveNavItem(getPageList().title);
 }
 // window.displayList = displayList; // Make displayList() visible to the browser console
 
@@ -71,7 +84,7 @@ if (storage.getSavedListNames()) {
     "A to-do list can contain a description. The description can be used to explain what the list is about. It is placed in an editable <div> element, so you can just click here to start editing! The description is automatically saved for every character you enter.",
     listTitleId,
     taskListId,
-    "descriptionParagraph"
+    descriptionParagraphId
   );
   pageList.onListMutation();
   navBar.buildNavBar();
@@ -97,7 +110,9 @@ taskInput.addEventListener("keydown", (event) => {
     taskInput.value = ""; // Clear the input
   }
 });
-clearButton.addEventListener("click", pageList.clearList.bind(pageList));
+clearButton.addEventListener("click", (event) => {
+  getPageList().clearList();
+});
 // Save list description either on every keypress or focusout:
 descriptionParagraph.addEventListener("keydown", (event) => {
   // If the user presses Shift + Enter:
@@ -129,6 +144,28 @@ titleHeading.addEventListener("focusout", (event) => {
   pageList.setTitle();
   navBar.buildNavBar();
   editButton.removeAttribute("style", "display: none;");
+  onPageChange();
+});
+newListButton.addEventListener("click", () => {
+  let nameTemplate = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
+  let newListName = nameTemplate;
+  let i = 1;
+  // Check if name is available
+  while(storage.listNameExists(newListName)) {
+    let appendix = ` (${i})`;
+    newListName = nameTemplate + appendix;
+    i++;
+  }
+  // Create a new list
+  pageList = new todo.TodoList(
+    newListName,
+    "Enter the list description here.",
+    listTitleId,
+    taskListId,
+    descriptionParagraphId
+  );
+  pageList.onListMutation();
+  onPageChange();
 });
 
 /**

@@ -35,14 +35,24 @@ export class TodoList {
 
   // Is called everytime the TodoList or a child ListEntry is changed
   onListMutation(titleChanged = false) {
+    // Extra logic is needed when the title changed:
     if (titleChanged) {
-      if (storage.listNameExists(this.titleHeading.textContent)) {
+      // If the new list name already exists:
+      if (storage.listNameExists(this.titleHeading.textContent) && this.title != this.titleHeading.textContent) {
         if (confirm(`A list with the name "${this.titleHeading.textContent}" already exists. Do you want to overwrite this?`)) {
-          storage.saveList(this);
+          let oldTitle = this.title;
+          this.title = this.titleHeading.textContent;
+          storage.saveListWithChangedTitle(this, oldTitle, this.title);
         } else {
+          // Reset the title to what it was
+          this.titleHeading.textContent = this.title;
           return;
         }
       }
+      let oldTitle = this.title;
+      this.title = this.titleHeading.textContent;
+      storage.saveListWithChangedTitle(this, oldTitle, this.title);
+      return;
     }
 
     storage.saveList(this);
@@ -50,7 +60,7 @@ export class TodoList {
   }
 
   // Add an item to the list.
-  addListEntry(itemText, checked = false) {
+  addListEntry(itemText, checked = false, listMutation = true) {
     itemText.trim();
     if (itemText) {
       const listEntry = new ListEntry(
@@ -64,7 +74,7 @@ export class TodoList {
       this.listEntries.push(listEntry); // Put in back of array
       this.itemIdCounter++;
     }
-    this.onListMutation();
+    if (listMutation) this.onListMutation();
   }
 
   // Remove an item from the list
@@ -112,7 +122,6 @@ export class TodoList {
 
   setTitle() {
     this.titleHeading.setAttribute("contenteditable", false);
-    this.title = this.titleHeading.textContent;
     this.onListMutation(true);
   }
 

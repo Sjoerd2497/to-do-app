@@ -48,6 +48,7 @@ export function getPageList() {
 export function setDefaultPageList() {
   pageList = defaultList;
   pageList.onListMutation();
+  displayList(pageList.title);
   onPageChange();
 }
 
@@ -62,12 +63,7 @@ export function displayList(listName) {
   // Load list
   let listJSON = storage.loadList(listName);
   console.log(listName);
-  pageList = storage.rebuildListFromJSON(
-    listJSON,
-    listTitleId,
-    taskListId,
-    descriptionParagraphId
-  );
+  pageList = storage.rebuildListFromJSON(listJSON, listTitleId, taskListId, descriptionParagraphId);
   onPageChange();
 }
 

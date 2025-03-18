@@ -171,6 +171,7 @@ newListButton.addEventListener("click", () => {
     descriptionParagraphId
   );
   pageList.onListMutation();
+  displayList(pageList.title);
   onPageChange();
 });
 

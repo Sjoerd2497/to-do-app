@@ -54,6 +54,13 @@ navigation bar item that can be clicked to display a list. The navigation bar
 is not saved into localStorage, however, but rebuilt based on the titles of the
 lists saved in localStorage.
 
+## 🤖 Use of AI
+
+In this project, I used ChatGPT for documentation ("Is there a JavaScript function 
+that..."), for guidance ("What topics do I need to investigate to do X"), and for
+debugging ("Why does this element with these styles not look like X"). I tried to 
+restrict ChatGPT from giving code in the answers.
+
 ## 📜 License
 
 This project is licensed under the _MIT License_.

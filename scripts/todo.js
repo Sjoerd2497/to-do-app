@@ -1,5 +1,6 @@
 import * as utils from "./utils.js";
 import * as storage from "./storage.js";
+import * as main from "./main.js";
 
 export class TodoList {
   // Rename this class? 'CustomList', 'GenericList', ...?
@@ -134,7 +135,7 @@ export class TodoList {
 
   // Edit the description of the list
   editDescription() {
-    // code
+    if (this.description == this.descriptionParagraph.textContent) return;
     this.description = this.descriptionParagraph.textContent;
     this.onListMutation();
   }
@@ -160,12 +161,11 @@ class ListEntry {
 
   id; // Identifier of this list item
   entryText; // The text of the list item
-  setEntryText(text) {
+  setEntryText = (text) => {
     this.entryText = text;
-  }
-  getEntryText() {
-    return this.entryText;
-  }
+  };
+  getEntryText = () => this.entryText;
+
   li; // The <li> that is the parent, is a flex container
   checkbox; // The checkbox on the list item
   span; // Contains the text for the list item
@@ -242,6 +242,7 @@ class ListEntry {
   }
 
   saveListItem() {
+    if (this.getEntryText() == this.listInput.value.trim()) return;
     // Update the entryText
     this.setEntryText(this.listInput.value.trim());
     // Switch <input> for <span> and set its text:
@@ -251,6 +252,7 @@ class ListEntry {
     this.li.append(this.span);
     this.span.textContent = this.getEntryText();
     this.onListMutation(); // List is changed!
+    main.onPageChange(); // Refresh page
   }
 
   clickCheckbox() {
@@ -265,6 +267,7 @@ class ListEntry {
     }
     this.sortList();
     this.onListMutation(); // List is changed!
+    main.onPageChange(); // Refresh page
   }
 
   // Export only the necessary properties

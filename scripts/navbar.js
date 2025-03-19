@@ -99,7 +99,15 @@ class NavItem {
     const button = document.createElement("button");
     button.setAttribute("class", "button-delete-list");
     button.addEventListener("click", () => {
+      // Ask for confirm if the user modified this list
+      if (storage.hasListChanged(this.navTitle)) {
+        if (!window.confirm("Are you sure you want to delete this list?")) {
+          return;
+        }
+      }
+      // Delete this list
       storage.deleteList(this.navTitle);
+
       if (storage.getSavedListNames()[0]) {
         //console.log(storage.getSavedListNames()[0]);
         main.displayList(storage.getSavedListNames()[0]);

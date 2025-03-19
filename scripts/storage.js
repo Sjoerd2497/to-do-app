@@ -26,6 +26,7 @@ export function saveList(obj) {
   storeListNames(obj.title);
 }
 
+// Saving a list under a different title requires more localStorage operations
 export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
   const listJSON = JSON.stringify(obj);
   // Remove oldTitle from list_names
@@ -49,9 +50,10 @@ export function deleteList(listName) {
   localStorage.removeItem(listName);
 }
 
-function hasListChanged(list) {
-  listHasChanged = false;
-  if (list.listEntries.length !== 0 && list.description !== main.newListDescription) {
+export function hasListChanged(listName) {
+  let list = JSON.parse(loadList(listName));
+  let listHasChanged = false;
+  if (list.listEntries.length != 0 || list.description != main.newListDescription) {
     listHasChanged = true;
   }
   return listHasChanged;

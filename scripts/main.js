@@ -65,7 +65,7 @@ export function displayList(listName) {
   onPageChange();
 }
 
-function onPageChange() {
+export function onPageChange() {
   // Rebuild navbar
   navBar.buildNavBar();
 
@@ -105,6 +105,7 @@ dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month
 addTaskButton.addEventListener("click", (event) => {
   pageList.addListEntry(taskInput.value);
   taskInput.value = "";
+  onPageChange();
 });
 taskInput.addEventListener("keydown", (event) => {
   // If the user presses the "Enter" key:

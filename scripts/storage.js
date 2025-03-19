@@ -38,7 +38,6 @@ export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
   localStorage.setItem(newTitle, listJSON);
   // Store the name of the list
   storeListNames(newTitle);
-  console.log(list_names);
 }
 
 export function deleteList(listName) {
@@ -76,7 +75,6 @@ export function getSavedListNames() {
 export function rebuildListFromJSON(listJSON, titleId, listId, paragraphId) {
   let parsedJSON = JSON.parse(listJSON);
   // create new TodoList().
-  console.log(parsedJSON);
   let rebuiltList = new todo.TodoList(
     parsedJSON.title,
     parsedJSON.description,
@@ -113,9 +111,7 @@ export function listNameExists(listName) {
 
 function storeListNames(listName) {
   let existsInMemory = !!localStorage.getItem("list_names");
-  let list_names = existsInMemory
-    ? JSON.parse(localStorage.getItem("list_names"))
-    : [];
+  let list_names = existsInMemory ? JSON.parse(localStorage.getItem("list_names")) : [];
   // Check if listName already exists in the list_names array:
   let listNameExists = false;
   list_names.forEach((title, index) => {

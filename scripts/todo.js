@@ -84,8 +84,27 @@ export class TodoList {
     if (listMutation) this.onListMutation();
   }
 
-  // Remove an item from the list
-  removeListEntry(id) {
+  // Remove all checked items from the list
+  clearList() {
+    let checkedListEntries = this.listEntries.filter((entry) => entry.checked);
+    checkedListEntries.forEach((entry) => {
+      entry.li.remove();
+    });
+    // Remove the checked ListEntries from the listEntries array
+    let uncheckedListEntries = this.listEntries.filter((entry) => !entry.checked);
+    this.listEntries = uncheckedListEntries;
+    this.onListMutation();
+  }
+
+  // Remove multiple items form the list
+  removeListEntries(entriesToRemove) {
+    entriesToRemove.forEach((entry) => {
+      // Remove the <li> from the DOM
+      entry.li.remove();
+    });
+
+    // Remove the entries from listEntries array
+
     // Remove the <li> from the DOM
     this.listEntries[id].li.remove();
     // Remove ListEntry object from array
@@ -93,19 +112,12 @@ export class TodoList {
     this.onListMutation();
   }
 
-  // Remove all checked items from the list
-  clearList() {
-    let indices = [];
-    this.listEntries.forEach((element, index) => {
-      if (element.checked) {
-        // Add index to array of indices to-be-deleted
-        indices.push(index);
-      }
-    });
-    // Loop in reverse order to not mess up array index order with splice()
-    for (let i = indices.length - 1; i >= 0; i--) {
-      this.removeListEntry(indices[i]);
-    }
+  // Remove an item from the list
+  removeListEntry(id) {
+    // Remove the <li> from the DOM
+    this.listEntries[id].li.remove();
+    // Remove ListEntry object from array
+    this.listEntries.splice(id, 1);
     this.onListMutation();
   }
 

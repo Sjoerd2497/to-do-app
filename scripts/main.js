@@ -62,7 +62,6 @@ export function displayList(listName) {
 
   // Load list
   let listJSON = storage.loadList(listName);
-  console.log(listName);
   pageList = storage.rebuildListFromJSON(listJSON, listTitleId, taskListId, descriptionParagraphId);
   onPageChange();
 }

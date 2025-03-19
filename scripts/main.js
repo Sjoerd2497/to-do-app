@@ -73,6 +73,9 @@ function onPageChange() {
 
   // Set current list as highlighted in navbar
   navBar.setActiveNavItem(getPageList().title);
+
+  // Update dateHeading with current date:
+  dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
 }
 // window.displayList = displayList; // Make displayList() visible to the browser console
 

@@ -64,3 +64,5 @@ restrict ChatGPT from giving code in the answers.
 ## 📜 License
 
 This project is licensed under the _MIT License_.
+
+Version 1.0.1

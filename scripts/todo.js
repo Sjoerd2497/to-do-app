@@ -125,10 +125,12 @@ export class TodoList {
   editTitle() {
     // code
     this.titleHeading.setAttribute("contenteditable", true);
+    this.titleHeading.setAttribute("class", "main-title margin-right");
   }
 
   setTitle() {
     this.titleHeading.setAttribute("contenteditable", false);
+    this.titleHeading.setAttribute("class", "main-title margin-right overflow");
     this.titleHeading.scrollLeft = 0;
     this.onListMutation(true);
   }

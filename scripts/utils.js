@@ -23,6 +23,8 @@ export function month() {
   return month;
 }
 
+export const year = () => new Date().getFullYear();
+
 export function extractNumberFromString(text) {
   const numberArr = text.match(/(\d+)/);
   const number = numberArr[0];

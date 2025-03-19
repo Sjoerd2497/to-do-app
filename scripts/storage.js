@@ -1,5 +1,6 @@
 import * as todo from "./todo.js";
 import * as utils from "./utils.js";
+import * as main from "./main.js";
 // I will use LocalStorage for now
 // In the future I might look into IndexedDB as a fun exercise!
 
@@ -46,6 +47,14 @@ export function deleteList(listName) {
   list_names.splice(index, 1);
   localStorage.setItem("list_names", JSON.stringify(list_names));
   localStorage.removeItem(listName);
+}
+
+function hasListChanged(list) {
+  listHasChanged = false;
+  if (list.listEntries.length !== 0 && list.description !== main.newListDescription) {
+    listHasChanged = true;
+  }
+  return listHasChanged;
 }
 
 /**

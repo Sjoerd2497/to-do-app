@@ -86,6 +86,7 @@ export class TodoList {
 
   // Remove all checked items from the list
   clearList() {
+    // Filter checked ListEntries from the array
     let checkedListEntries = this.listEntries.filter((entry) => entry.checked);
     checkedListEntries.forEach((entry) => {
       entry.li.remove();
@@ -96,28 +97,12 @@ export class TodoList {
     this.onListMutation();
   }
 
-  // Remove multiple items form the list
-  removeListEntries(entriesToRemove) {
-    entriesToRemove.forEach((entry) => {
-      // Remove the <li> from the DOM
-      entry.li.remove();
-    });
-
-    // Remove the entries from listEntries array
-
-    // Remove the <li> from the DOM
-    this.listEntries[id].li.remove();
-    // Remove ListEntry object from array
-    this.listEntries.splice(id, 1);
-    this.onListMutation();
-  }
-
   // Remove an item from the list
-  removeListEntry(id) {
+  removeListEntry(index) {
     // Remove the <li> from the DOM
-    this.listEntries[id].li.remove();
+    this.listEntries[index].li.remove();
     // Remove ListEntry object from array
-    this.listEntries.splice(id, 1);
+    this.listEntries.splice(index, 1);
     this.onListMutation();
   }
 
@@ -248,7 +233,7 @@ class ListEntry {
     // Save the changes on [Enter] or focusout:
     this.listInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        this.saveListItem();
+        this.listInput.blur();
       }
     });
     this.listInput.addEventListener("focusout", (event) => {
@@ -260,7 +245,9 @@ class ListEntry {
     // Update the entryText
     this.setEntryText(this.listInput.value.trim());
     // Switch <input> for <span> and set its text:
-    this.listInput.remove();
+    if (this.listInput) {
+      this.listInput.remove();
+    }
     this.li.append(this.span);
     this.span.textContent = this.getEntryText();
     this.onListMutation(); // List is changed!
@@ -311,7 +298,7 @@ class ListEntry {
     const span = document.createElement("span");
     span.setAttribute("class", "list-text");
     span.textContent = listItemText;
-    span.addEventListener("click", this.editListItem.bind(this)); // I don't like using 'this' in JavaScript
+    span.addEventListener("click", this.editListItem.bind(this));
     return span;
   }
 

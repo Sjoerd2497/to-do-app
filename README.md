@@ -47,6 +47,7 @@ the TodoList class represents a list. Each TodoList instance can have multiple
 ListEntry instances, which represent list items. A TodoList instance keeps an
 array of all ListEntry instances. Therefore when a TodoList instance is saved
 as a JSON in localStorage, it automatically includes the list items.
+
 The two classes in `navbar.js` follow a similar pattern. The NavBar class
 represents the navigation bar, while the NavItem class represents a
 navigation bar item that can be clicked to display a list. The navigation bar

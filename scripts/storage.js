@@ -1,5 +1,6 @@
 import * as todo from "./todo.js";
 import * as utils from "./utils.js";
+import * as main from "./main.js";
 // I will use LocalStorage for now
 // In the future I might look into IndexedDB as a fun exercise!
 
@@ -25,6 +26,7 @@ export function saveList(obj) {
   storeListNames(obj.title);
 }
 
+// Saving a list under a different title requires more localStorage operations
 export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
   const listJSON = JSON.stringify(obj);
   // Remove oldTitle from list_names
@@ -38,7 +40,6 @@ export function saveListWithChangedTitle(obj, oldTitle, newTitle) {
   localStorage.setItem(newTitle, listJSON);
   // Store the name of the list
   storeListNames(newTitle);
-  console.log(list_names);
 }
 
 export function deleteList(listName) {
@@ -47,6 +48,15 @@ export function deleteList(listName) {
   list_names.splice(index, 1);
   localStorage.setItem("list_names", JSON.stringify(list_names));
   localStorage.removeItem(listName);
+}
+
+export function hasListChanged(listName) {
+  let list = JSON.parse(loadList(listName));
+  let listHasChanged = false;
+  if (list.listEntries.length != 0 || list.description != main.newListDescription) {
+    listHasChanged = true;
+  }
+  return listHasChanged;
 }
 
 /**
@@ -76,7 +86,6 @@ export function getSavedListNames() {
 export function rebuildListFromJSON(listJSON, titleId, listId, paragraphId) {
   let parsedJSON = JSON.parse(listJSON);
   // create new TodoList().
-  console.log(parsedJSON);
   let rebuiltList = new todo.TodoList(
     parsedJSON.title,
     parsedJSON.description,
@@ -113,9 +122,7 @@ export function listNameExists(listName) {
 
 function storeListNames(listName) {
   let existsInMemory = !!localStorage.getItem("list_names");
-  let list_names = existsInMemory
-    ? JSON.parse(localStorage.getItem("list_names"))
-    : [];
+  let list_names = existsInMemory ? JSON.parse(localStorage.getItem("list_names")) : [];
   // Check if listName already exists in the list_names array:
   let listNameExists = false;
   list_names.forEach((title, index) => {

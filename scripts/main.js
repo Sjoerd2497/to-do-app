@@ -35,14 +35,13 @@ const defaultList = new todo.TodoList(
   taskListId,
   descriptionParagraphId
 );
+export const newListDescription = "Enter the list description here.";
 
 // The TodoList list that is displayed on the page
 let pageList;
 
 // Function for other scripts/classes to get the current pageList
-export function getPageList() {
-  return pageList;
-}
+export const getPageList = () => pageList;
 // window.getPageList = getPageList; // Make getPageList() available to browser console
 
 export function setDefaultPageList() {
@@ -62,12 +61,11 @@ export function displayList(listName) {
 
   // Load list
   let listJSON = storage.loadList(listName);
-  console.log(listName);
   pageList = storage.rebuildListFromJSON(listJSON, listTitleId, taskListId, descriptionParagraphId);
   onPageChange();
 }
 
-function onPageChange() {
+export function onPageChange() {
   // Rebuild navbar
   navBar.buildNavBar();
 
@@ -107,6 +105,7 @@ dateHeading.textContent = `${utils.day()}, ${new Date().getDate()} ${utils.month
 addTaskButton.addEventListener("click", (event) => {
   pageList.addListEntry(taskInput.value);
   taskInput.value = "";
+  onPageChange();
 });
 taskInput.addEventListener("keydown", (event) => {
   // If the user presses the "Enter" key:
@@ -156,7 +155,7 @@ titleHeading.addEventListener("focusout", (event) => {
   onPageChange();
 });
 newListButton.addEventListener("click", () => {
-  let nameTemplate = `${utils.day()}, ${new Date().getDate()} ${utils.month()}`;
+  let nameTemplate = `${utils.day()}, ${new Date().getDate()} ${utils.month()} ${utils.year()}`;
   let newListName = nameTemplate;
   let i = 1;
   // Check if name is available
@@ -168,7 +167,7 @@ newListButton.addEventListener("click", () => {
   // Create a new list
   pageList = new todo.TodoList(
     newListName,
-    "Enter the list description here.",
+    newListDescription,
     listTitleId,
     taskListId,
     descriptionParagraphId

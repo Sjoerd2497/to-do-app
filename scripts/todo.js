@@ -1,5 +1,6 @@
 import * as utils from "./utils.js";
 import * as storage from "./storage.js";
+import * as main from "./main.js";
 
 export class TodoList {
   // Rename this class? 'CustomList', 'GenericList', ...?
@@ -84,28 +85,25 @@ export class TodoList {
     if (listMutation) this.onListMutation();
   }
 
-  // Remove an item from the list
-  removeListEntry(id) {
-    // Remove the <li> from the DOM
-    this.listEntries[id].li.remove();
-    // Remove ListEntry object from array
-    this.listEntries.splice(id, 1);
+  // Remove all checked items from the list
+  clearList() {
+    // Filter checked ListEntries from the array
+    let checkedListEntries = this.listEntries.filter((entry) => entry.checked);
+    checkedListEntries.forEach((entry) => {
+      entry.li.remove();
+    });
+    // Remove the checked ListEntries from the listEntries array
+    let uncheckedListEntries = this.listEntries.filter((entry) => !entry.checked);
+    this.listEntries = uncheckedListEntries;
     this.onListMutation();
   }
 
-  // Remove all checked items from the list
-  clearList() {
-    let indices = [];
-    this.listEntries.forEach((element, index) => {
-      if (element.checked) {
-        // Add index to array of indices to-be-deleted
-        indices.push(index);
-      }
-    });
-    // Loop in reverse order to not mess up array index order with splice()
-    for (let i = indices.length - 1; i >= 0; i--) {
-      this.removeListEntry(indices[i]);
-    }
+  // Remove an item from the list
+  removeListEntry(index) {
+    // Remove the <li> from the DOM
+    this.listEntries[index].li.remove();
+    // Remove ListEntry object from array
+    this.listEntries.splice(index, 1);
     this.onListMutation();
   }
 
@@ -137,7 +135,7 @@ export class TodoList {
 
   // Edit the description of the list
   editDescription() {
-    // code
+    if (this.description == this.descriptionParagraph.textContent) return;
     this.description = this.descriptionParagraph.textContent;
     this.onListMutation();
   }
@@ -163,12 +161,11 @@ class ListEntry {
 
   id; // Identifier of this list item
   entryText; // The text of the list item
-  setEntryText(text) {
+  setEntryText = (text) => {
     this.entryText = text;
-  }
-  getEntryText() {
-    return this.entryText;
-  }
+  };
+  getEntryText = () => this.entryText;
+
   li; // The <li> that is the parent, is a flex container
   checkbox; // The checkbox on the list item
   span; // Contains the text for the list item
@@ -236,7 +233,7 @@ class ListEntry {
     // Save the changes on [Enter] or focusout:
     this.listInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        this.saveListItem();
+        this.listInput.blur();
       }
     });
     this.listInput.addEventListener("focusout", (event) => {
@@ -245,13 +242,17 @@ class ListEntry {
   }
 
   saveListItem() {
+    if (this.getEntryText() == this.listInput.value.trim()) return;
     // Update the entryText
     this.setEntryText(this.listInput.value.trim());
     // Switch <input> for <span> and set its text:
-    this.listInput.remove();
+    if (this.listInput) {
+      this.listInput.remove();
+    }
     this.li.append(this.span);
     this.span.textContent = this.getEntryText();
     this.onListMutation(); // List is changed!
+    main.onPageChange(); // Refresh page
   }
 
   clickCheckbox() {
@@ -266,6 +267,7 @@ class ListEntry {
     }
     this.sortList();
     this.onListMutation(); // List is changed!
+    main.onPageChange(); // Refresh page
   }
 
   // Export only the necessary properties
@@ -299,7 +301,7 @@ class ListEntry {
     const span = document.createElement("span");
     span.setAttribute("class", "list-text");
     span.textContent = listItemText;
-    span.addEventListener("click", this.editListItem.bind(this)); // I don't like using 'this' in JavaScript
+    span.addEventListener("click", this.editListItem.bind(this));
     return span;
   }
 

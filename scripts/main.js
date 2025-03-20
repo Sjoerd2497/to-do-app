@@ -17,6 +17,7 @@ const clearButtonId = "clearButton";
 const descriptionParagraphId = "descriptionParagraph";
 const editButtonId = "editButton";
 const newListButtonId = "newListButton";
+const sidebarButtonId = "sidebarButton";
 
 const dateHeading = document.getElementById(dateTextId);
 const titleHeading = document.getElementById(listTitleId);
@@ -27,7 +28,9 @@ const descriptionParagraph = document.getElementById(descriptionParagraphId);
 const editButton = document.getElementById(editButtonId);
 const newListButton = document.getElementById(newListButtonId);
 const navElement = document.getElementById(navBarId);
-let navBar = new navbar.NavBar(navElement); // Creates the navbar
+const sidebarButton = document.getElementById(sidebarButtonId);
+const sidebar = document.querySelector(".sidebar");
+let navBar = new navbar.NavBar(navElement); // Populates the navbar with items
 const defaultList = new todo.TodoList(
   "My first to-do list",
   "This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
@@ -115,6 +118,7 @@ taskInput.addEventListener("keydown", (event) => {
     onPageChange();
   }
 });
+// Clear list button
 clearButton.addEventListener("click", (event) => {
   getPageList().clearList();
   onPageChange();
@@ -132,6 +136,7 @@ descriptionParagraph.addEventListener("focusout", (event) => {
   pageList.editDescription();
   onPageChange();
 });
+// Edit title button
 editButton.addEventListener("click", (event) => {
   pageList.editTitle();
   titleHeading.focus();
@@ -154,6 +159,7 @@ titleHeading.addEventListener("focusout", (event) => {
   editButton.removeAttribute("style", "display: none;");
   onPageChange();
 });
+// Create new list button
 newListButton.addEventListener("click", () => {
   let nameTemplate = `${utils.day()}, ${new Date().getDate()} ${utils.month()} ${utils.year()}`;
   let newListName = nameTemplate;
@@ -175,6 +181,26 @@ newListButton.addEventListener("click", () => {
   pageList.onListMutation();
   displayList(pageList.title);
   onPageChange();
+});
+// Show/hide sidebar button
+sidebarButton.addEventListener("click", () => {
+  const sidebarStyle = window.getComputedStyle(sidebar);
+  const sidebarWidth = sidebarStyle.getPropertyValue("--sidebar-width");
+  console.log(sidebarWidth);
+  // Check if sidebar is out
+  if (sidebarStyle.left == "0px") {
+    // Fold sidebar to left
+    sidebar.style.left = "-100%";
+    sidebar.style.width = "0px";
+    sidebarButton.style.left = "0px";
+    sidebarButton.style.transform = "scaleX(-1)";
+  } else {
+    // Collapse sidebar
+    sidebar.style.left = "0px";
+    sidebar.style.removeProperty("width");
+    sidebarButton.style.left = sidebarWidth;
+    sidebarButton.style.transform = "scaleX(1)";
+  }
 });
 
 /**

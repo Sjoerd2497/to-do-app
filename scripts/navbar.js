@@ -45,7 +45,6 @@ export class NavBar {
     document.querySelectorAll(".tooltip").forEach((tooltip) => {
       tooltip.addEventListener("mouseover", () => {
         const tooltiptext = tooltip.querySelector(".tooltiptext");
-        const tooltipright = tooltip.querySelector(".tooltip-right");
         const tooltipData = tooltip.getBoundingClientRect();
         const computedStyle = window.getComputedStyle(tooltiptext);
         tooltiptext.style.left = tooltipData.left + tooltip.offsetWidth + 40 + "px";

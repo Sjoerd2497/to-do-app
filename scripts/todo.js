@@ -233,26 +233,27 @@ class ListEntry {
     // Save the changes on [Enter] or focusout:
     this.listInput.addEventListener("keydown", (event) => {
       if (event.key === "Enter") {
-        this.listInput.blur();
+        this.listInput.blur(); // Force a focusout event
       }
     });
     this.listInput.addEventListener("focusout", (event) => {
       this.saveListItem();
+      console.log("Boop");
     });
   }
 
   saveListItem() {
-    if (this.getEntryText() == this.listInput.value.trim()) return;
-    // Update the entryText
-    this.setEntryText(this.listInput.value.trim());
-    // Switch <input> for <span> and set its text:
-    if (this.listInput) {
-      this.listInput.remove();
+    // If the contents have changed, save it
+    if (this.getEntryText() != this.listInput.value.trim()) {
+      // Update the entryText
+      this.setEntryText(this.listInput.value.trim());
+      this.onListMutation(); // List is changed!
+      main.onPageChange(); // Refresh page
     }
+    // Switch <input> for <span> and set its text:
+    this.listInput.remove();
     this.li.append(this.span);
     this.span.textContent = this.getEntryText();
-    this.onListMutation(); // List is changed!
-    main.onPageChange(); // Refresh page
   }
 
   clickCheckbox() {

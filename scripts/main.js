@@ -32,7 +32,7 @@ const sidebarButton = document.getElementById(sidebarButtonId);
 const sidebar = document.querySelector(".sidebar");
 let navBar = new navbar.NavBar(navElement); // Populates the navbar with items
 const defaultList = new todo.TodoList(
-  "My first to-do list",
+  "To-do list",
   "This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
   listTitleId,
   taskListId,
@@ -120,8 +120,10 @@ taskInput.addEventListener("keydown", (event) => {
 });
 // Clear list button
 clearButton.addEventListener("click", (event) => {
-  getPageList().clearList();
-  onPageChange();
+  if (confirm("Are you sure that you want to delete the checked list items?")) {
+    getPageList().clearList();
+    onPageChange();
+  }
 });
 // Save list description either on every keypress or focusout:
 descriptionParagraph.addEventListener("keydown", (event) => {

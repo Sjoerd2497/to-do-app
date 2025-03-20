@@ -508,6 +508,7 @@ The following classes are for the list items.
   flex-grow: 1;
   min-width: 0;
   height: 100vh;
+  height: 100dvh;
   overflow: auto;
   scrollbar-color: #e1e0e0 #ffffff00;
 

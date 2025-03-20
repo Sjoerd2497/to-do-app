@@ -92,8 +92,6 @@ input {
   justify-content: space-between;
 }
 
-
-
 .flex-row-container {
   display: flex;
   flex: 1 1 auto;
@@ -326,7 +324,7 @@ The following classes are for the list items.
 
 .navbar {
   height: 95%;
-  overflow-x: hidden;
+  overflow-x: visible;
   overflow-y: scroll;
   scrollbar-color: #e1e0e0 #ffffff00;
 }
@@ -352,6 +350,61 @@ The following classes are for the list items.
 
 .nav-item:active {
   background-color: #d2d2d2 !important;
+}
+
+/* w3schools CSS tooltips */
+.tooltip {
+  position: relative;
+  overflow: visible;
+  z-index: 9999;
+}
+
+.tooltiptext {
+  text-wrap: nowrap;
+  overflow: visible;
+  padding-top: 4px;
+  padding-right: 0.5rem;
+  padding-bottom: 6px;
+  padding-left: 0.5rem;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  position: fixed;
+  width: auto;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltip:hover .tooltiptext:hover {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.tooltip-right {
+  top: 4px;
+  left: 115%;
+}
+
+.tooltip-right::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #555 transparent transparent;
 }
 
 .overflow {
@@ -383,7 +436,7 @@ The following classes are for the list items.
   width: 280px;
   flex-shrink: 0;
   transition: left 400ms;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .sidebar:active {

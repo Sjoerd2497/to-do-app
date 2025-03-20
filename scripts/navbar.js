@@ -1,5 +1,6 @@
 import * as storage from "./storage.js";
 import * as main from "./main.js";
+import * as utils from "./utils.js";
 // Each navbar item has the following elements:
 // <a class="nav-link" href><div class="nav-item">[List title]</div></a>
 
@@ -26,6 +27,8 @@ export class NavBar {
       this.navItems.push(navItem); // Put the NavItem in the array
       this.navElement.append(navItem.docFragment); // Place it in the sidebar
     });
+
+    this.positionTooltips();
   }
 
   setActiveNavItem(title) {
@@ -37,6 +40,20 @@ export class NavBar {
       }
     });
   }
+
+  positionTooltips() {
+    document.querySelectorAll(".tooltip").forEach((tooltip) => {
+      tooltip.addEventListener("mouseover", () => {
+        const tooltiptext = tooltip.querySelector(".tooltiptext");
+        const tooltipright = tooltip.querySelector(".tooltip-right");
+        const tooltipData = tooltip.getBoundingClientRect();
+        const computedStyle = window.getComputedStyle(tooltiptext);
+        tooltiptext.style.left = tooltipData.left + tooltip.offsetWidth + 40 + "px";
+        tooltiptext.style.top =
+          tooltipData.top + utils.extractNumberFromString(computedStyle.paddingTop) + "px";
+      });
+    });
+  }
 }
 
 class NavItem {
@@ -44,9 +61,21 @@ class NavItem {
   navLink; // The <a></a> link to open/load the list
   divElement;
   spanElement;
+  spanElementTooltip;
   deleteButton;
   docFragment; // The DocumentFragment holding all elements:
-  // <a class="nav-link" href="#"><div class="nav-item"><span class="overflow">[List title]</span><button class="button-delete-list"></button></div></a>
+  // <a class="nav-link" href="#">
+  //   <div class="nav-item tooltip">
+  //     <span class="overflow">
+  //       [List title]
+  //     </span>
+  //     <button class="button-delete-list">
+  //     </button>
+  //     <span class="tooltiptext tooltip-right">
+  //       [List title]
+  //     <span>
+  //   </div>
+  // </a>
 
   constructor(listTitle) {
     this.navTitle = listTitle;
@@ -56,13 +85,15 @@ class NavItem {
     this.divElement = this.createDivElement();
     this.spanElement = this.createSpanElement();
     this.deleteButton = this.createDeleteButton();
+    this.spanElementTooltip = this.createSpanElementTooltip();
     this.docFragment = this.createDocumentFragment();
   }
 
   createDocumentFragment() {
     const navItemFragment = new DocumentFragment();
     this.spanElement.append(this.navTitle);
-    this.divElement.append(this.spanElement, this.deleteButton);
+    this.spanElementTooltip.append(this.navTitle);
+    this.divElement.append(this.spanElement, this.deleteButton, this.spanElementTooltip);
     this.navLink.append(this.divElement);
     navItemFragment.append(this.navLink);
     return navItemFragment;
@@ -85,13 +116,19 @@ class NavItem {
 
   createDivElement() {
     const div = document.createElement("div");
-    div.setAttribute("class", "nav-item");
+    div.setAttribute("class", "nav-item tooltip");
     return div;
   }
 
   createSpanElement() {
     const span = document.createElement("span");
     span.setAttribute("class", "overflow");
+    return span;
+  }
+
+  createSpanElementTooltip() {
+    const span = document.createElement("span");
+    span.setAttribute("class", "tooltiptext tooltip-right");
     return span;
   }
 

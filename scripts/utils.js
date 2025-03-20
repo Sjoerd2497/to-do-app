@@ -28,7 +28,7 @@ export const year = () => new Date().getFullYear();
 export function extractNumberFromString(text) {
   const numberArr = text.match(/(\d+)/);
   const number = numberArr[0];
-  return number;
+  return Number(number);
 }
 
 export function moveToStartOfArray(array, index) {

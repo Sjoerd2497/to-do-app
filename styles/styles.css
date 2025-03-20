@@ -52,7 +52,6 @@ button {
   height: var(--default-button-height);
   width: 80px;
   align-self: center;
-  margin-left: 1rem;
   cursor: pointer;
 }
 
@@ -95,27 +94,54 @@ input {
 
 .flex-row-container {
   display: flex;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   min-width: 0;
   align-items: center;
 }
 
-.button-new-list {
+.flex-col-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.button {
   border: none;
   background-color: unset;
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   display: flex;
-  width: auto;
   color: #4f4f4f;
+  width: 36px;
+  height: 36px;
   border-radius: 0.5rem;
   align-items: center;
   padding-left: 10px;
   padding-right: 10px;
-  cursor: pointer;
 }
 
-.button-new-list:hover {
+.button:hover {
   background-color: #e9e9ed;
+}
+
+.button:active {
+  background-color: #e9e9ed;
+}
+
+.button-dark-mode {
+  padding: 8px;
+  align-self: flex-end;
+}
+
+.button-dark-mode:hover > * {
+  transform: rotate(-30deg);
+  transition: transform 0.5s ease-out;
+  image-rendering: optimizeQuality;
+  will-change: transform;
+}
+
+.button-new-list {
+  width: auto;
 }
 
 .button-delete-list {
@@ -140,6 +166,11 @@ input {
 }
 
 .button-delete-list:hover {
+  /*background-color: #bebebe;*/
+  opacity: 1;
+}
+
+.button-delete-list:active {
   /*background-color: #bebebe;*/
   opacity: 1;
 }
@@ -324,18 +355,24 @@ The following classes are for the list items.
 }
 
 .sidebar-padding {
-  padding-left: 1.2rem;
-  padding-right: 1.2rem;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
-.bottom-padding {
-  padding-bottom: 1.5rem;
+.bottom-margin {
+  margin-bottom: 1.5rem;
+}
+
+.margin-top-bot {
+  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .navbar {
-  height: 95%;
   overflow-x: visible;
   overflow-y: scroll;
+  flex-grow: 1;
+  /* height: 80%; */
   scrollbar-color: #e1e0e0 #ffffff00;
 }
 
@@ -347,7 +384,7 @@ The following classes are for the list items.
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   font-weight: 400;
   overflow: hidden;
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 5px 0 5px 0;
   padding: 8px 10px 8px 10px;
   border-radius: 0.5rem;
   align-items: center;
@@ -521,6 +558,7 @@ The following classes are for the list items.
   margin-left: auto;
   margin-right: auto;
   max-width: 40rem;
+  transition: max-width 0.2s ease-in-out;
 }
 
 @media (min-width: 768px) {

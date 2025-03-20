@@ -47,7 +47,7 @@ export class NavBar {
         const tooltiptext = tooltip.querySelector(".tooltiptext");
         const tooltipData = tooltip.getBoundingClientRect();
         const computedStyle = window.getComputedStyle(tooltiptext);
-        tooltiptext.style.left = tooltipData.left + tooltip.offsetWidth + 40 + "px";
+        tooltiptext.style.left = tooltipData.left + tooltip.offsetWidth + 32 + "px";
         tooltiptext.style.top =
           tooltipData.top + utils.extractNumberFromString(computedStyle.paddingTop) + "px";
       });

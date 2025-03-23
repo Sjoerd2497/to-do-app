@@ -20,8 +20,8 @@ const newListButtonId = "newListButton";
 const sidebarButtonId = "sidebarButton";
 const themeToggleButtonId = "themeToggleButton";
 const pageStyleId = "pageStyle";
-const lightThemeId = "/styles/light-mode.css";
-const darkThemeId = "/styles/dark-mode.css";
+const lightThemeId = "styles/light-mode.css";
+const darkThemeId = "styles/dark-mode.css";
 
 const dateHeading = document.getElementById(dateTextId);
 const titleHeading = document.getElementById(listTitleId);

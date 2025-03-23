@@ -1,0 +1,51 @@
+@import "light-mode.css";
+
+:root {
+  /* Element colors */
+  --html-color: var(--black-color);
+  --html-bg-color: var(--white-color);
+  --a-link-color: var(--dark-color);
+  --a-visited-color: gray;
+  --a-hover-color: var(--black-color);
+  --selection-color: var(--black-color);
+  --selection-bg-color: #fef574;
+  --todo-input-bg-color: var(--white);
+  --button-color: var(--dark-color);
+  --button-hover-bg-color: var(--light-color);
+  --button-active-bg-color: var(--light-color);
+  --sidebar-bg-color: var(--lightest-color);
+  --button-hover-bg-color: var(--light-color);
+  --sidebar-button-color: var(--dark-color);
+  --scroll-bar-color: var(--mid-light-color);
+  --sidebar-border-color: var(--border-color);
+  --button-sidebar-hover-bg-color: var(--lightest-color);
+  --nav-item-color: var(--dark-color);
+  --nav-item-hover-bg-color: var(--mid-dark-color);
+  --nav-item-active-bg-color: var(--light-color);
+  --list-text-hover-color: var(--lightest-color);
+  --list-input-focus-bg-color: var(--lighter-color);
+  --list-item-color: var(--black-color);
+  --description-hover-bg-color: var(--lightest-color);
+  --description-focus-bg-color: var(--lighter-color);
+  --main-title-focus-bg-color: var(--lighter-color);
+  --button-edit-hover-bg-color: var(--light-color);
+  --header-container-border-color: var(--border-color);
+
+  --transparent-color: #ffffff00;
+  --shadow-primary-color: #3c40431a;
+  --shadow-secondary-color: #3c40430d;
+  --tooltip-right-after-border-color: transparent #555 transparent transparent;
+  --tooltip-text-color: white;
+  --tooltip-text-bg-color: #555;
+
+  /* Color palette */
+  --lightest-color: #181818;
+  --lighter-color: #1f1f1f;
+  --light-color: #2c2c2c;
+  --mid-light-color: #313131;
+  --mid-dark-color: #1f2122;
+  --dark-color: #cccccc;
+  --border-color: #707070;
+  --black-color: #cecece;
+  --white-color: #0a0a0a;
+}

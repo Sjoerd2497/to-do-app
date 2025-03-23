@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link href="styles/styles.css" rel="stylesheet" />
+    <link id="pageStyle" href="styles/light-mode.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
@@ -29,7 +29,7 @@
         </g>
       </svg>
     </button>
-    <div class="sidebar flex-col-container">
+    <aside class="sidebar flex-col-container">
       <header class="flex-row-container sidebar-padding bottom-margin space-between">
         <h2 class="nav-title">My lists</h2>
         <button class="button button-new-list" id="newListButton">
@@ -57,7 +57,7 @@
         <a class="nav-link" href="#"><div class="nav-item">This list has an enormously long title</div></a> -->
       </nav>
       <div class="flex-row-container sidebar-padding margin-top-bot space-between">
-        <button class="button button-dark-mode" id="buttonDarkMode">
+        <button class="button button-dark-mode" id="themeToggleButton">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             data-name="Layer 2"
@@ -73,8 +73,8 @@
           </svg>
         </button>
       </div>
-    </div>
-    <div class="main-content">
+    </aside>
+    <main class="main-content">
       <header class="header-container">
         <div class="flex-row-container margin-right">
           <h1 id="listTitle" class="main-title margin-right overflow"></h1>
@@ -111,7 +111,7 @@
       <div id="checkboxes">
         <ul id="taskList"></ul>
       </div>
-    </div>
+    </main>
     <script type="module" src="scripts/main.js"></script>
   </body>
 </html>

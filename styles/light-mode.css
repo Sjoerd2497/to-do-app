@@ -1,10 +1,11 @@
 @import "reset.css";
 
 html {
+  color: var(--html-color);
   font-family: Inter, sans-serif;
   font-weight: 300;
   font-size: 18px;
-  background-color: white;
+  background-color: var(--html-bg-color);
 }
 
 a {
@@ -12,25 +13,27 @@ a {
 }
 
 a:link {
-  color: #4f4f4f;
+  color: var(--a-link-color);
 }
 
 a:visited {
-  color: gray;
+  color: var(--a-visited-color);
 }
 
 a:hover {
-  color: black;
+  color: var(--a-hover-color);
 }
 
 body {
   display: flex;
   min-height: 100vh;
   overflow: hidden;
+  transition: transform 0.4s ease-in-out;
 }
 
 ::selection {
-  background-color: #fef574;
+  color: var(--selection-color);
+  background-color: var(--selection-bg-color);
 }
 
 .external-link::after {
@@ -111,7 +114,7 @@ input {
   background-color: unset;
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
   display: flex;
-  color: #4f4f4f;
+  color: var(--button-color);
   width: 36px;
   height: 36px;
   border-radius: 0.5rem;
@@ -121,11 +124,11 @@ input {
 }
 
 .button:hover {
-  background-color: #e9e9ed;
+  background-color: var(--button-hover-bg-color);
 }
 
 .button:active {
-  background-color: #e9e9ed;
+  background-color: var(--button-active-bg-color);
 }
 
 .button-dark-mode {
@@ -180,7 +183,7 @@ div:hover > .button-delete-list {
 }
 
 .button-edit {
-  background-color: #ffffff00;
+  background-color: var(--transparent-color);
   display: flex;
   cursor: pointer;
   border-radius: 24px;
@@ -202,7 +205,7 @@ div:hover > .button-edit {
 }
 
 .button-edit:hover {
-  background-color: #e9e9ed;
+  background-color: var(--button-edit-hover-bg-color);
 }
 
 .pencil-icon {
@@ -229,11 +232,11 @@ div:hover > .button-edit {
 }
 
 .description:hover {
-  background-color: #f6f8fa;
+  background-color: var(--description-hover-bg-color);
 }
 
 .description:focus {
-  background-color: #eeeeee;
+  background-color: var(--description-focus-bg-color);
 }
 
 /* 
@@ -242,7 +245,7 @@ The following classes are for the list items.
 .list-item {
   display: flex;
   align-items: center;
-  color: black;
+  color: var(--list-item-color);
   font-size: 18px;
   gap: 0px;
   text-overflow: wrap;
@@ -260,7 +263,7 @@ The following classes are for the list items.
   padding: 1px 2px 1px 8px;
 }
 .list-text:hover {
-  background-color: #f6f8fa;
+  background-color: var(--list-text-hover-color);
 }
 .list-text-checked {
   flex-grow: 1;
@@ -268,12 +271,6 @@ The following classes are for the list items.
   line-height: 2rem;
   min-height: calc(2rem + 2px);
   padding: 1px 2px 1px 8px;
-}
-.edit-link {
-  color: black;
-  font-size: 12px;
-  margin: 0px 0 0px 10px;
-  text-decoration: underline;
 }
 .list-input {
   border: 0;
@@ -283,18 +280,8 @@ The following classes are for the list items.
 }
 
 .list-input:focus {
-  background-color: #eeeeee;
+  background-color: var(--list-input-focus-bg-color);
   outline: none;
-}
-
-.editinput {
-  line-height: 1.5em;
-  font-size: 18px;
-  margin: 0 !important;
-  padding: 4px 0 4px 0 !important;
-  border-radius: 4px !important;
-  border: 1px solid #d8d8d8;
-  box-shadow: unset !important;
 }
 
 .button-container {
@@ -319,7 +306,7 @@ The following classes are for the list items.
 @media (min-width: 768px) {
   .header-container {
     border: 1px;
-    border-color: #d8d8d8;
+    border-color: var(--header-container-border-color);
     border-style: none none solid none;
     align-items: baseline;
   }
@@ -346,7 +333,7 @@ The following classes are for the list items.
 }
 
 .main-title:focus {
-  background-color: #eeeeee;
+  background-color: var(--main-title-focus-bg-color);
 }
 
 #dateText {
@@ -373,11 +360,11 @@ The following classes are for the list items.
   overflow-y: scroll;
   flex-grow: 1;
   /* height: 80%; */
-  scrollbar-color: #e1e0e0 #ffffff00;
+  scrollbar-color: var(--scroll-bar-color) var(--transparent-color);
 }
 
 .nav-item {
-  color: #4f4f4f;
+  color: var(--nav-item-color);
   font-size: 16px;
   height: 41px;
   display: flex;
@@ -392,18 +379,18 @@ The following classes are for the list items.
 }
 
 .nav-item:hover {
-  background-color: #d0d0d7 !important;
+  background-color: var(--nav-item-hover-bg-color) !important;
 }
 
 .nav-item:active {
-  background-color: #d2d2d2 !important;
+  background-color: var(--nav-item-active-bg-color) !important;
 }
 
 /* w3schools CSS tooltips */
 .tooltip {
   position: relative;
   overflow: visible;
-  z-index: 9999;
+  z-index: 1;
 }
 
 .tooltiptext {
@@ -419,11 +406,11 @@ The following classes are for the list items.
   visibility: hidden;
   position: fixed;
   width: auto;
-  background-color: #555;
-  color: #fff;
+  background-color: var(--tooltip-text-bg-color);
+  color: var(--tooltip-text-color);
   text-align: center;
   border-radius: 6px;
-  z-index: 9999;
+  z-index: 1;
   opacity: 0;
   transition: opacity 0.6s;
 }
@@ -451,7 +438,7 @@ The following classes are for the list items.
   margin-top: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent #555 transparent transparent;
+  border-color: var(--tooltip-right-after-border-color);
 }
 
 .overflow {
@@ -474,10 +461,10 @@ The following classes are for the list items.
   left: -100%;
   bottom: 0;
   top: 0;
-  background-color: #f6f8fa;
+  background-color: var(--sidebar-bg-color);
   height: 100vh;
   border: 0.5px;
-  border-color: #d8d8d8;
+  border-color: var(--sidebar-border-color);
   border-style: none solid none none;
   padding: var(--padding-top) 0 0 0;
   width: var(--sidebar-width);
@@ -493,6 +480,10 @@ The following classes are for the list items.
   }
 }
 
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
 .button-sidebar {
   position: fixed;
   z-index: 1;
@@ -503,13 +494,13 @@ The following classes are for the list items.
   margin-left: 2px;
   width: 32px;
   height: 32px;
-  color: #4f4f4f;
+  color: var(--sidebar-button-color);
   border-radius: 18px;
   align-items: center;
   cursor: pointer;
   top: calc(var(--padding-top) + 1px + (var(--default-button-height) - 32px) / 2);
   transform: scaleX(-1);
-  transition: left 300ms;
+  transition: left 300ms, transform 0.4s ease-in-out;
 
   @media (min-width: 768px) {
     left: calc(var(--sidebar-width)); /*14.8 rem = 266.4px*/
@@ -519,25 +510,29 @@ The following classes are for the list items.
 }
 
 .button-sidebar:hover {
-  background-color: #f6f8fa;
+  background-color: var(--button-sidebar-hover-bg-color);
 }
 
 .todo-input {
+  background-color: var(--todo-input-bg-color);
   margin: 1rem 0 1em 0;
   padding: 8px 1rem 8px 1rem;
   flex: auto;
   border-radius: 10px;
-  border: 1px solid #d8d8d8;
-  box-shadow: 0px 2px 4px rgba(60, 64, 67, 0.1), 0px 4px 12px 4px rgba(60, 64, 67, 0.05);
+  border: 1px solid var(--sidebar-border-color);
+  box-shadow: 0px 2px 4px var(--shadow-primary-color),
+    0px 4px 12px 4px var(--shadow-secondary-color);
 }
 
 .todo-input:focus {
   outline: none;
-  box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1), 0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+  box-shadow: 0px 4px 8px var(--shadow-primary-color),
+    0px 8px 24px 8px var(--shadow-secondary-color);
 }
 
 .todo-input:hover {
-  box-shadow: 0px 4px 8px rgba(60, 64, 67, 0.1), 0px 8px 24px 8px rgba(60, 64, 67, 0.1);
+  box-shadow: 0px 4px 8px var(--shadow-primary-color),
+    0px 8px 24px 8px var(--shadow-secondary-color);
 }
 
 .main-content {
@@ -547,7 +542,7 @@ The following classes are for the list items.
   height: 100vh;
   height: 100dvh;
   overflow: auto;
-  scrollbar-color: #e1e0e0 #ffffff00;
+  scrollbar-color: var(--scroll-bar-color) var(--transparent-color);
 
   @media (min-width: 768px) {
     padding: var(--padding-top) 3rem 1.5rem 3rem;
@@ -581,4 +576,52 @@ The following classes are for the list items.
   --sidebar-width: 280px;
   --padding-top: 3rem;
   --default-button-height: 36px;
+
+  /* Element colors */
+  --html-color: var(--black-color);
+  --html-bg-color: var(--white-color);
+  --a-link-color: var(--dark-color);
+  --a-visited-color: gray;
+  --a-hover-color: var(--black-color);
+  --selection-color: var(--black-color);
+  --selection-bg-color: #fef574;
+  --todo-input-bg-color: var(--white);
+  --button-color: var(--dark-color);
+  --button-hover-bg-color: var(--light-color);
+  --button-active-bg-color: var(--light-color);
+  --sidebar-bg-color: var(--lightest-color);
+  --button-hover-bg-color: var(--light-color);
+  --sidebar-button-color: var(--dark-color);
+  --scroll-bar-color: var(--mid-light-color);
+  --sidebar-border-color: var(--border-color);
+  --button-sidebar-hover-bg-color: var(--lightest-color);
+  --nav-item-color: var(--dark-color);
+  --nav-item-hover-bg-color: var(--mid-dark-color);
+  --nav-item-active-bg-color: var(--light-color);
+  --list-text-hover-color: var(--lightest-color);
+  --list-input-focus-bg-color: var(--lighter-color);
+  --list-item-color: var(--black-color);
+  --description-hover-bg-color: var(--lightest-color);
+  --description-focus-bg-color: var(--lighter-color);
+  --main-title-focus-bg-color: var(--lighter-color);
+  --button-edit-hover-bg-color: var(--light-color);
+  --header-container-border-color: var(--border-color);
+
+  --transparent-color: #ffffff00;
+  --shadow-primary-color: #3c40431a;
+  --shadow-secondary-color: #3c40430d;
+  --tooltip-right-after-border-color: transparent #555 transparent transparent;
+  --tooltip-text-color: white;
+  --tooltip-text-bg-color: #555;
+
+  /* Color palette */
+  --lightest-color: #f6f8fa;
+  --lighter-color: #eeeeee;
+  --light-color: #e9e9ed;
+  --mid-light-color: #e1e0e0;
+  --mid-dark-color: #d0d0d7;
+  --dark-color: #4f4f4f;
+  --border-color: #d8d8d8;
+  --black-color: black;
+  --white-color: white;
 }

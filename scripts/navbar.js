@@ -34,7 +34,7 @@ export class NavBar {
   setActiveNavItem(title) {
     this.navItems.forEach((item) => {
       if (item.navTitle == title) {
-        item.divElement.setAttribute("style", "background-color: #e9e9ed;");
+        item.divElement.setAttribute("style", "background-color: var(--nav-item-active-bg-color);");
       } else {
         item.divElement.setAttribute("style", "background-color: unset;");
       }

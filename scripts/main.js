@@ -18,6 +18,10 @@ const descriptionParagraphId = "descriptionParagraph";
 const editButtonId = "editButton";
 const newListButtonId = "newListButton";
 const sidebarButtonId = "sidebarButton";
+const themeToggleButtonId = "themeToggleButton";
+const pageStyleId = "pageStyle";
+const lightThemeId = "/styles/light-mode.css";
+const darkThemeId = "/styles/dark-mode.css";
 
 const dateHeading = document.getElementById(dateTextId);
 const titleHeading = document.getElementById(listTitleId);
@@ -28,6 +32,7 @@ const descriptionParagraph = document.getElementById(descriptionParagraphId);
 const editButton = document.getElementById(editButtonId);
 const newListButton = document.getElementById(newListButtonId);
 const navElement = document.getElementById(navBarId);
+const themeToggleButton = document.getElementById(themeToggleButtonId);
 const sidebarButton = document.getElementById(sidebarButtonId);
 const sidebar = document.querySelector(".sidebar");
 let navBar = new navbar.NavBar(navElement); // Populates the navbar with items
@@ -202,6 +207,16 @@ sidebarButton.addEventListener("click", () => {
     sidebar.style.removeProperty("width");
     sidebarButton.style.left = sidebarWidth;
     sidebarButton.style.transform = "scaleX(1)";
+  }
+});
+// Toggle dark/light theme
+themeToggleButton.addEventListener("click", () => {
+  // code
+  const pageStyle = document.getElementById(pageStyleId);
+  if (pageStyle.href == window.location.origin + lightThemeId) {
+    pageStyle.setAttribute("href", darkThemeId);
+  } else {
+    pageStyle.setAttribute("href", lightThemeId);
   }
 });
 

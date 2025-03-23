@@ -213,6 +213,7 @@ sidebarButton.addEventListener("click", () => {
 themeToggleButton.addEventListener("click", () => {
   // code
   const pageStyle = document.getElementById(pageStyleId);
+  console.log(window.location.origin + window.location.pathname + lightThemeId);
   if (pageStyle.href == window.location.origin + window.location.pathname + lightThemeId) {
     pageStyle.setAttribute("href", darkThemeId);
   } else {

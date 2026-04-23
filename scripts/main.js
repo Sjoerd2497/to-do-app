@@ -38,10 +38,10 @@ const sidebar = document.querySelector(".sidebar");
 let navBar = new navbar.NavBar(navElement); // Populates the navbar with items
 const defaultList = new todo.TodoList(
   "To-do list",
-  "This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
+  "This page is for demo purposes only! Not suitable for real use.\n\nThis is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
   listTitleId,
   taskListId,
-  descriptionParagraphId
+  descriptionParagraphId,
 );
 export const newListDescription = "Enter the list description here.";
 
@@ -69,7 +69,12 @@ export function displayList(listName) {
 
   // Load list
   let listJSON = storage.loadList(listName);
-  pageList = storage.rebuildListFromJSON(listJSON, listTitleId, taskListId, descriptionParagraphId);
+  pageList = storage.rebuildListFromJSON(
+    listJSON,
+    listTitleId,
+    taskListId,
+    descriptionParagraphId,
+  );
   onPageChange();
 }
 
@@ -183,7 +188,7 @@ newListButton.addEventListener("click", () => {
     newListDescription,
     listTitleId,
     taskListId,
-    descriptionParagraphId
+    descriptionParagraphId,
   );
   pageList.onListMutation();
   displayList(pageList.title);
@@ -214,7 +219,10 @@ themeToggleButton.addEventListener("click", () => {
   // code
   const pageStyle = document.getElementById(pageStyleId);
   console.log(window.location.origin + window.location.pathname + lightThemeId);
-  if (pageStyle.href == window.location.origin + window.location.pathname + lightThemeId) {
+  if (
+    pageStyle.href ==
+    window.location.origin + window.location.pathname + lightThemeId
+  ) {
     pageStyle.setAttribute("href", darkThemeId);
   } else {
     pageStyle.setAttribute("href", lightThemeId);

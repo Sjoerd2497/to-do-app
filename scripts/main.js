@@ -38,7 +38,7 @@ const sidebar = document.querySelector(".sidebar");
 let navBar = new navbar.NavBar(navElement); // Populates the navbar with items
 const defaultList = new todo.TodoList(
   "To-do list",
-  "This page is for demo purposes only! Not suitable for real use.<br /><br />This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
+  "This page is for demo purposes only! Not suitable for real use. This is the description of the to-do list. It is placed in an editable <div> element, so you can just click on this to start editing! The description is automatically saved for every character you enter. You can also edit the title of this list (hover over it!).",
   listTitleId,
   taskListId,
   descriptionParagraphId,

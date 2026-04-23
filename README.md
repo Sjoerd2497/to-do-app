@@ -2,6 +2,10 @@
 
 I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 
+## Demo
+
+[Preview the app here!](https://sjoerddejonge.github.io/to-do-app/)
+
 ## Features
 
 - Add list entries
@@ -18,10 +22,6 @@ I made this to-do app to learn the basics of HTML/CSS/JavaScript.
 - Add sidebar button
 - Re-ordering lists by drag and drop
 - Add night mode
-
-## Demo
-
-[Preview the app here!](https://sjoerd2497.github.io/to-do-app/)
 
 ## Project structure
 
